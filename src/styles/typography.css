@@ -1,0 +1,26 @@
+@layer base {
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold text-gray-900;
+  }
+
+  /* Body Text */
+  p {
+    @apply text-base leading-relaxed text-gray-600;
+  }
+
+  /* Links */
+  a {
+    @apply text-[#B87503] hover:text-[#9A6203] transition-colors;
+  }
+
+  /* Lists */
+  ul, ol {
+    @apply space-y-4;
+  }
+
+  /* Buttons */
+  button {
+    @apply font-medium;
+  }
+}

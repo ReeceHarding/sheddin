@@ -1,0 +1,26 @@
+@layer utilities {
+  /* Section Spacing */
+  .section-spacing {
+    @apply py-24;
+  }
+
+  /* Container */
+  .container-padding {
+    @apply px-4;
+  }
+
+  /* Card Spacing */
+  .card-padding {
+    @apply p-8;
+  }
+
+  /* Grid Gap */
+  .grid-gap {
+    @apply gap-8;
+  }
+
+  /* Stack Spacing */
+  .stack-spacing {
+    @apply space-y-4;
+  }
+}
