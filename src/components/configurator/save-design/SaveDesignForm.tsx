@@ -55,7 +55,7 @@ export const SaveDesignForm: React.FC<SaveDesignFormProps> = ({ options }) => {
 
       if (authData.user) {
         // Save the configuration
-        const { error: configError } = await supabase
+        const { data: configData, error: configError } = await supabase
           .from('user_configs')
           .insert({
             user_id: authData.user.id,
@@ -70,8 +70,8 @@ export const SaveDesignForm: React.FC<SaveDesignFormProps> = ({ options }) => {
           throw new Error(configError.message);
         }
 
-        // Redirect to their design page
-        window.location.href = `/designs/${authData.user.id}`;
+        // Redirect to their design page using the config ID
+        window.location.href = `/designs/${configData.id}`;
       } else {
         throw new Error('No user data returned from signup');
       }
