@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface ProcessHeroProps {
   backgroundImage: string;
@@ -13,13 +14,24 @@ export const ProcessHero: React.FC<ProcessHeroProps> = ({
   subtitle,
   description
 }) => {
+  const formattedDescription = description.split('Start with our 3D Design Center').map((part, index) => {
+    if (index === 0) return part;
+    return (
+      <React.Fragment key={index}>
+        <Link to="/design" className="text-yellow-400 hover:text-yellow-300 transition-colors">
+          Start with our 3D Design Center
+        </Link>
+        {part}
+      </React.Fragment>
+    );
+  });
+
   return (
-    <div className="relative">
-      {/* Hero Section */}
-      <div className="relative h-[90vh] min-h-[800px]">
+    <>
+      <div className="relative h-[calc(100vh-80px)] mt-[-80px]">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/50 z-10"></div>
+          <div className="absolute inset-0 bg-black/50 z-10"></div>
           <img
             src={backgroundImage}
             alt="Studio Shed Process"
@@ -28,8 +40,8 @@ export const ProcessHero: React.FC<ProcessHeroProps> = ({
         </div>
 
         {/* Content */}
-        <div className="relative z-20 h-full flex flex-col items-center justify-center text-center">
-          <div className="max-w-[800px] mx-auto px-6">
+        <div className="relative z-20 h-full flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 pt-[80px]">
+          <div className="max-w-[800px] mx-auto">
             <span className="inline-block text-yellow-400 text-sm font-semibold uppercase tracking-wider mb-6">
               PROCESS
             </span>
@@ -40,10 +52,10 @@ export const ProcessHero: React.FC<ProcessHeroProps> = ({
               {subtitle}
             </h2>
             <p className="text-lg text-white/90 mx-auto mb-12 leading-relaxed max-w-[640px]">
-              {description}
+              {formattedDescription}
             </p>
             <a
-              href="#toc-glance"
+              href="#process-glance"
               className="inline-flex items-center px-10 py-4 bg-yellow-400 hover:bg-yellow-500 text-black text-base font-semibold rounded-full transition-colors duration-200"
             >
               SEE OUR PROCESS AT-A-GLANCE
@@ -52,31 +64,29 @@ export const ProcessHero: React.FC<ProcessHeroProps> = ({
         </div>
       </div>
 
-      {/* Navigation Tabs */}
-      <div className="border-t border-b border-yellow-400/10">
-        <div className="max-w-7xl mx-auto px-6">
-          <nav className="flex justify-between overflow-x-auto -mb-px">
+      {/* Process Navigation */}
+      <div className="sticky top-[80px] z-40 bg-white border-t border-b border-gray-200">
+        <div className="max-w-7xl mx-auto">
+          <nav className="flex justify-between overflow-x-auto">
             {[
-              'Site Visit',
-              'Design Coordination',
-              'Project Design',
-              'Permitting',
-              'Production',
-              'Installation'
-            ].map((item, index) => (
+              { label: 'Site Visit', id: 'site-visit' },
+              { label: 'Design Coordination', id: 'design-coordination' },
+              { label: 'Project Design', id: 'project-design' },
+              { label: 'Permitting', id: 'permitting' },
+              { label: 'Production', id: 'production' },
+              { label: 'Installation', id: 'installation' }
+            ].map((item) => (
               <a
-                key={item}
-                href={`#toc-${item.toLowerCase().replace(' ', '-')}`}
-                className={`px-6 py-5 text-sm font-medium text-gray-800 hover:text-yellow-600 whitespace-nowrap border-b-2 transition-colors duration-200 ${
-                  index === 0 ? 'border-yellow-400' : 'border-transparent'
-                }`}
+                key={item.id}
+                href={`#${item.id}`}
+                className="px-6 py-4 text-sm font-medium text-gray-800 hover:text-yellow-600 whitespace-nowrap border-b-2 border-transparent hover:border-yellow-400 transition-colors duration-200"
               >
-                {item}
+                {item.label}
               </a>
             ))}
           </nav>
         </div>
       </div>
-    </div>
+    </>
   );
 };

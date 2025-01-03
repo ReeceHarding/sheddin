@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { PriceBreakdown } from './PriceBreakdown';
 
+type SectionId = 'floor-plan' | 'doors-windows' | 'interior' | 'exterior';
+
 interface ConfiguratorHeaderProps {
   totalPrice: number;
   selectedPlan: string;
@@ -11,7 +13,7 @@ interface ConfiguratorHeaderProps {
     features: string[];
   };
   options: Record<string, string>;
-  onTabClick: (tab: string) => void;
+  onTabClick: (tab: SectionId) => void;
 }
 
 export const ConfiguratorHeader: React.FC<ConfiguratorHeaderProps> = ({
@@ -23,7 +25,7 @@ export const ConfiguratorHeader: React.FC<ConfiguratorHeaderProps> = ({
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const tabs = [
+  const tabs: { id: SectionId; label: string }[] = [
     { id: 'floor-plan', label: 'Floor Plan' },
     { id: 'doors-windows', label: 'Doors & Windows' },
     { id: 'interior', label: 'Interior Finishes' },

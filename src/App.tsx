@@ -10,6 +10,7 @@ import { SuccessPage } from './components/configurator/save-design/SuccessPage';
 import { ConsultationPage } from './pages/ConsultationPage';
 import { ConfiguratorProvider } from './context/ConfiguratorContext';
 import { ScrollToTop } from './components/layout/ScrollToTop';
+import { DesignSummaryPage } from './pages/DesignSummaryPage';
 
 function App() {
   // Mock user and options for SuccessPage
@@ -36,11 +37,7 @@ function App() {
           </ConfiguratorProvider>
         } />
         <Route path="/consultation" element={<Layout><ConsultationPage /></Layout>} />
-        <Route path="/designs/:id" element={
-          <Layout>
-            <SuccessPage {...mockSuccessPageProps} />
-          </Layout>
-        } />
+        <Route path="/designs/:id" element={<DesignSummaryPage />} />
       </Routes>
     </Router>
   );

@@ -5,7 +5,7 @@ import { ProcessFAQ } from './ProcessFAQ';
 
 export const ProcessSections = () => {
   const siteVisitData = {
-    id: 'siteVisit',
+    id: 'site-visit',
     preTitle: 'Start with our Design Center',
     title: 'Site Visit',
     duration: '2+ Weeks',
@@ -50,7 +50,7 @@ export const ProcessSections = () => {
   };
 
   const designCoordinationData = {
-    id: 'designCoordination',
+    id: 'design-coordination',
     preTitle: 'Order Placement & Deposit',
     preSubtitle: '1st Payment',
     title: 'Design Coordination',
@@ -74,7 +74,7 @@ export const ProcessSections = () => {
   };
 
   const projectDesignData = {
-    id: 'projectDesign',
+    id: 'project-design',
     preTitle: 'Approved Coordination Set & Contract',
     preSubtitle: '2nd Payment',
     title: 'Project Design',
@@ -191,7 +191,9 @@ export const ProcessSections = () => {
       <ProcessStep {...permittingData} index={3} />
       <ProcessStep {...scopeCallAndProductionData} index={4} />
       <ProcessStep {...installationData} index={5} />
-      <ProcessGlance />
+      <div id="process-glance">
+        <ProcessGlance />
+      </div>
       <ProcessFAQ />
     </div>
   );

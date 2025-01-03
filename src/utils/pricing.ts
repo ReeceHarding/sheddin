@@ -36,9 +36,6 @@ const OPTION_PRICES = {
   permitPlans: {
     'include': 5995,
   },
-  installation: {
-    'proassembly': 54034,
-  },
 } as const;
 
 // Calculate base price with options
@@ -47,8 +44,9 @@ export const calculateTotalPrice = (options: PricingOptions): number => {
   const basePrice = MODEL_PRICES[options.model || 'model-a'] || MODEL_PRICES['model-a'];
 
   return Object.entries(options).reduce((total, [category, value]) => {
-    if (value && OPTION_PRICES[category]?.[value]) {
-      return total + OPTION_PRICES[category][value];
+    const optionCategory = OPTION_PRICES[category as keyof typeof OPTION_PRICES];
+    if (value && optionCategory && value in optionCategory) {
+      return total + (optionCategory as Record<string, number>)[value];
     }
     return total;
   }, basePrice);
@@ -65,7 +63,7 @@ export const calculateEstimatedTotal = (basePrice: number, options: Record<strin
 
   // Add installation cost if ProAssembly selected
   if (options.installation === 'proassembly') {
-    total += OPTION_PRICES.installation.proassembly;
+    total += 54034; // ProAssembly cost
   }
 
   return total;

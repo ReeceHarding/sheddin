@@ -1,76 +1,170 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { supabase } from '../../../lib/supabase';
-import { useConfigurator } from '../../../context/ConfiguratorContext';
+import { FormInput } from './FormInput';
+import { FormHeader } from './FormHeader';
+import { FormDescription } from './FormDescription';
 
 interface SaveDesignFormProps {
   options: Record<string, string>;
 }
 
-export const SaveDesignForm: React.FC<SaveDesignFormProps> = () => {
-  const { state } = useConfigurator();
+export const SaveDesignForm: React.FC<SaveDesignFormProps> = ({ options }) => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    zipCode: '',
+    phoneNumber: ''
+  });
   const [isLoading, setIsLoading] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-    });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+    setErrorMessage(null); // Clear error when user types
+  };
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setErrorMessage(null);
 
     try {
-      if (user) {
-        // Update existing configuration
-        const { error } = await supabase
-          .from('user_configs')
-          .upsert({
-            user_id: user.id,
-            config_name: 'Default Configuration',
-            options: state.options
-          });
+      // Register the user
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            first_name: formData.firstName,
+            last_name: formData.lastName,
+            phone: formData.phoneNumber,
+            zip_code: formData.zipCode
+          }
+        }
+      });
 
-        if (error) throw error;
-        window.location.href = `/designs/${user.id}`;
+      if (authError) {
+        console.error('Auth Error:', authError);
+        throw new Error(authError.message);
+      }
+
+      if (authData.user) {
+        // Save the configuration
+        const { error: configError } = await supabase
+          .from('user_configs')
+          .insert({
+            user_id: authData.user.id,
+            config_name: 'Default Configuration',
+            options: options
+          })
+          .select()
+          .single();
+
+        if (configError) {
+          console.error('Config Error:', configError);
+          throw new Error(configError.message);
+        }
+
+        // Redirect to their design page
+        window.location.href = `/designs/${authData.user.id}`;
       } else {
-        // Handle new user registration
-        // ... existing registration logic ...
+        throw new Error('No user data returned from signup');
       }
     } catch (error) {
       console.error('Error saving design:', error);
-      alert('There was an error saving your design. Please try again.');
+      setErrorMessage(error instanceof Error ? error.message : 'An unexpected error occurred');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
-      {user ? (
-        <div className="sticky bottom-0 bg-white border-t py-6 mt-12">
-          <div className="max-w-4xl mx-auto flex justify-center">
-            <button
-              onClick={() => window.location.href = `/designs/${user.id}`}
-              className="bg-primary hover:bg-primary-hover text-white font-medium py-3 px-8 rounded-md transition-colors"
-            >
-              VIEW YOUR DESIGN
-            </button>
-          </div>
+    <div className="max-w-2xl mx-auto">
+      <FormHeader />
+      <FormDescription />
+      
+      {errorMessage && (
+        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
+          <p className="text-red-600 text-sm">{errorMessage}</p>
         </div>
-      ) : (
-        // Registration form for new users
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* ... existing form fields ... */}
-        </form>
       )}
+      
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid md:grid-cols-2 gap-6 mb-6">
+          <FormInput
+            label="First name"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+            disabled={isLoading}
+          />
+          <FormInput
+            label="Last name"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+            disabled={isLoading}
+          />
+        </div>
+
+        <div className="mb-6">
+          <FormInput
+            label="Email address"
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            disabled={isLoading}
+          />
+        </div>
+
+        <div className="mb-6">
+          <FormInput
+            label="Password"
+            name="password"
+            type="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            disabled={isLoading}
+          />
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <FormInput
+            label="ZIP code"
+            name="zipCode"
+            value={formData.zipCode}
+            onChange={handleChange}
+            required
+            disabled={isLoading}
+          />
+          <FormInput
+            label="Phone number"
+            name="phoneNumber"
+            type="tel"
+            value={formData.phoneNumber}
+            onChange={handleChange}
+            disabled={isLoading}
+          />
+        </div>
+
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="w-full bg-[#B87503] hover:bg-[#9A6203] text-white font-medium py-3 px-6 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isLoading ? 'Saving...' : 'SAVE YOUR DESIGN'}
+        </button>
+      </form>
     </div>
   );
 };

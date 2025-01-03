@@ -9,11 +9,14 @@ interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
-  const hideFooter = ['/design', '/price'].includes(location.pathname);
+  const hideFooter = ['/design', '/price'].includes(location.pathname) || location.pathname.startsWith('/designs/');
+  const isConsultationPage = location.pathname === '/consultation';
 
   return (
     <div className="min-h-screen flex flex-col">
-      <MainNavigation />
+      <div className={isConsultationPage ? 'bg-black/60' : ''}>
+        <MainNavigation />
+      </div>
       <main className="flex-grow">
         {children}
       </main>
