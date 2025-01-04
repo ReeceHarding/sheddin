@@ -190,6 +190,11 @@ export const ConfiguratorLayout = () => {
     }
   };
 
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    window.location.href = '/';
+  };
+
   // Load existing configuration if user is logged in
   useEffect(() => {
     async function loadConfiguration() {
@@ -265,12 +270,18 @@ export const ConfiguratorLayout = () => {
             <SaveDesignForm options={selectedOptions} />
           ) : (
             <div className="max-w-2xl mx-auto">
-              <div className="flex justify-center">
+              <div className="flex flex-col items-center gap-4">
                 <button
                   onClick={handleViewDesign}
                   className="bg-[#B87503] hover:bg-[#9A6203] text-white font-medium py-3 px-8 rounded-md transition-colors"
                 >
                   VIEW YOUR DESIGN
+                </button>
+                <button
+                  onClick={handleSignOut}
+                  className="text-gray-600 hover:text-gray-800 font-medium py-2 px-4 rounded-md transition-colors"
+                >
+                  Sign Out
                 </button>
               </div>
             </div>

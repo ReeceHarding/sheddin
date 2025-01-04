@@ -4,6 +4,7 @@ import { X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../../../lib/supabase';
 import { useAuth } from '../../../hooks/useAuth';
+import { sendOrderConfirmationEmail } from '../../../utils/emailService';
 
 interface DesignDetails {
   // Basic Model Info
@@ -104,6 +105,8 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [orderSuccess, setOrderSuccess] = useState(false);
+  const [orderId, setOrderId] = useState<string | null>(null);
 
   const [shippingAddress, setShippingAddress] = useState<ShippingAddress>({
     name: user?.user_metadata?.first_name ? `${user.user_metadata.first_name} ${user.user_metadata.last_name}` : '',
@@ -161,7 +164,6 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
     setError(null);
 
     try {
-      // First verify the user is logged in
       if (!user?.id) {
         throw new Error('Please sign in to place an order');
       }
@@ -176,7 +178,6 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
         foundation_type: foundationType
       });
 
-      // Create the order
       const { data: order, error: insertError } = await supabase
         .from('orders')
         .insert({
@@ -201,10 +202,44 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
       if (!order) {
         throw new Error('Failed to create order');
       }
-      
-      onClose();
-      // Redirect to order confirmation page
-      window.location.href = `/orders/${order.id}/confirmation`;
+
+      console.log('Order created successfully:', order);
+      setOrderId(order.id);
+
+      // Send confirmation email
+      try {
+        const emailResult = await sendOrderConfirmationEmail({
+          orderId: order.id,
+          customerName: shippingAddress.name,
+          customerEmail: user.email || '',
+          modelDetails: {
+            name: designDetails.modelName,
+            size: `${designDetails.modelSize} (${designDetails.squareFootage} sq ft)`,
+          },
+          selectedOptions: {
+            entry: designDetails.entryType,
+            siding: designDetails.sidingType,
+            sidingColor: designDetails.siding,
+            windows: designDetails.windowStyle,
+            interior: designDetails.interiorType,
+            exteriorAddons: designDetails.exteriorOptions.map(opt => opt.name),
+          },
+          pricing: {
+            basePrice: designDetails.basePrice,
+            totalPrice: orderTotal,
+          }
+        });
+        
+        console.log('Email sending result:', emailResult);
+        
+        if (!emailResult) {
+          console.warn('Email failed to send, but order was created successfully');
+        }
+      } catch (emailError) {
+        console.error('Error sending confirmation email:', emailError);
+      }
+
+      setOrderSuccess(true);
     } catch (err) {
       console.error('Error in handleSubmit:', err);
       setError(err instanceof Error ? err.message : 'An error occurred while placing your order');
@@ -212,6 +247,41 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
       setIsSubmitting(false);
     }
   };
+
+  if (orderSuccess && orderId) {
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div className="relative top-20 mx-auto p-5 w-full max-w-2xl">
+          <div className="relative bg-white rounded-lg shadow-lg p-8">
+            <div className="text-center">
+              <div className="mb-6">
+                <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              </div>
+              <h2 className="text-2xl font-medium mb-4">Order Successfully Placed!</h2>
+              <p className="text-gray-600 mb-6">
+                Thank you for your order. We've sent a confirmation email to your inbox.
+              </p>
+              <p className="text-gray-500 mb-8">
+                Order Reference: #{orderId.slice(0, 8)}
+              </p>
+              <div className="space-y-4">
+                <button
+                  onClick={onClose}
+                  className="w-full py-3 bg-[#B87503] text-white rounded-md hover:bg-[#9A6203]"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full z-50">

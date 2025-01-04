@@ -7,7 +7,7 @@ interface Option {
 }
 
 interface OptionsSelectorProps {
-  options: Option[];
+  options: readonly Option[] | Option[];
   selectedOption: string;
   onOptionSelect: (id: string) => void;
 }

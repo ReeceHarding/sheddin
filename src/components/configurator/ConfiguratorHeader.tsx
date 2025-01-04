@@ -50,28 +50,30 @@ export const ConfiguratorHeader: React.FC<ConfiguratorHeaderProps> = ({
               ))}
             </nav>
           </div>
-          <button
-            className="flex items-center space-x-2 px-4 py-2 bg-white group"
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          >
-            <span className="text-xl font-bold">${totalPrice.toLocaleString()}</span>
-            <ChevronDown className={`h-5 w-5 transition-transform duration-300 ${
-              isDropdownOpen ? 'rotate-180' : ''
-            }`} />
-          </button>
+          <div className="relative">
+            <button
+              className="flex items-center space-x-2 px-4 py-2 bg-white group"
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
+              <span className="text-xl font-bold">${totalPrice.toLocaleString()}</span>
+              <ChevronDown className={`h-5 w-5 transition-transform duration-300 ${
+                isDropdownOpen ? 'rotate-180' : ''
+              }`} />
+            </button>
+
+            <div className={`
+              absolute right-0 mt-1 w-96 transform transition-all duration-300 ease-in-out origin-top-right
+              ${isDropdownOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}
+            `}>
+              <PriceBreakdown
+                totalPrice={totalPrice}
+                selectedPlan={selectedPlan}
+                specs={specs}
+                options={options}
+              />
+            </div>
+          </div>
         </div>
-      </div>
-      
-      <div className={`
-        absolute right-0 mt-1 w-96 transform transition-all duration-300 ease-in-out
-        ${isDropdownOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}
-      `}>
-        <PriceBreakdown
-          totalPrice={totalPrice}
-          selectedPlan={selectedPlan}
-          specs={specs}
-          options={options}
-        />
       </div>
     </header>
   );

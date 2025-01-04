@@ -34,7 +34,47 @@ export const SaveDesignForm: React.FC<SaveDesignFormProps> = ({ options }) => {
     setErrorMessage(null);
 
     try {
-      // Register the user
+      // First check if user exists
+      const { data: existingUser, error: signInError } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password
+      });
+
+      if (signInError) {
+        console.error('Sign in error:', signInError);
+      }
+
+      if (existingUser?.user) {
+        // User exists and password is correct, save the configuration
+        const { data: configData, error: configError } = await supabase
+          .from('user_configs')
+          .insert({
+            user_id: existingUser.user.id,
+            config_name: 'Default Configuration',
+            options: options
+          })
+          .select()
+          .single();
+
+        if (configError) {
+          console.error('Config Error:', configError);
+          throw new Error(configError.message);
+        }
+
+        console.log('Successfully saved configuration for existing user:', {
+          userId: existingUser.user.id,
+          configId: configData.id,
+          options: options
+        });
+
+        // Temporarily comment out redirect to debug
+        console.log('Would redirect to:', `/designs/${configData.id}`);
+        // window.location.href = `/designs/${configData.id}`;
+        return;
+      }
+
+      // If we get here, either the user doesn't exist or the password was incorrect
+      // Try to register the user
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -70,14 +110,27 @@ export const SaveDesignForm: React.FC<SaveDesignFormProps> = ({ options }) => {
           throw new Error(configError.message);
         }
 
-        // Redirect to their design page using the config ID
-        window.location.href = `/designs/${configData.id}`;
+        console.log('Successfully created new user and saved configuration:', {
+          userId: authData.user.id,
+          configId: configData.id,
+          options: options
+        });
+
+        // Temporarily comment out redirect to debug
+        console.log('Would redirect to:', `/designs/${configData.id}`);
+        // window.location.href = `/designs/${configData.id}`;
       } else {
         throw new Error('No user data returned from signup');
       }
     } catch (error) {
-      console.error('Error saving design:', error);
+      console.error('Error in handleSubmit:', error);
       setErrorMessage(error instanceof Error ? error.message : 'An unexpected error occurred');
+      // Log additional details about the error
+      console.log('Form data at time of error:', {
+        ...formData,
+        password: '[REDACTED]' // Don't log the actual password
+      });
+      console.log('Options at time of error:', options);
     } finally {
       setIsLoading(false);
     }

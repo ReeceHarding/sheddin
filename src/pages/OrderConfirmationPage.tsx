@@ -98,14 +98,6 @@ export const OrderConfirmationPage: React.FC = () => {
             <p className="font-medium">Call us: (888) 900-3933</p>
             <p className="font-medium">Email: design@studioshed.com</p>
           </div>
-          <div className="mt-8">
-            <Link
-              to="/account/orders"
-              className="inline-flex items-center text-[#B87503] hover:text-[#9A6203]"
-            >
-              View all orders →
-            </Link>
-          </div>
         </div>
       </main>
     </div>

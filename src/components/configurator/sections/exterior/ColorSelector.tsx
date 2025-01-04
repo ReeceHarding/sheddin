@@ -9,7 +9,7 @@ interface ColorOption {
 
 interface ColorSelectorProps {
   title: string;
-  options: ColorOption[];
+  options: readonly ColorOption[] | ColorOption[];
   selectedId: string;
   onSelect: (id: string) => void;
 }
