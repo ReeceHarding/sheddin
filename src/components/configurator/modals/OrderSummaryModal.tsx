@@ -74,6 +74,7 @@ interface OrderSummaryModalProps {
   permitPlansPrice: number;
   foundationType: 'concrete' | 'wood' | 'tbd' | null;
   totalPrice: number;
+  configId: string;
 }
 
 interface ShippingAddress {
@@ -96,43 +97,36 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
   permitPlansPrice,
   foundationType,
   totalPrice,
+  configId,
 }) => {
   const { user } = useAuth();
-  const [sameAsShipping, setSameAsShipping] = useState(false);
+  const [sameAsShipping, setSameAsShipping] = useState(true);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const [shippingAddress, setShippingAddress] = useState<ShippingAddress>({
-    name: '',
+    name: user?.user_metadata?.first_name ? `${user.user_metadata.first_name} ${user.user_metadata.last_name}` : '',
     address: '',
     apartment: '',
     city: '',
     state: '',
-    postalCode: '',
+    postalCode: user?.user_metadata?.zip_code || '',
   });
 
   const [billingAddress, setBillingAddress] = useState<BillingAddress>({
-    name: '',
+    name: user?.user_metadata?.first_name ? `${user.user_metadata.first_name} ${user.user_metadata.last_name}` : '',
     address: '',
     apartment: '',
     city: '',
     state: '',
-    postalCode: '',
+    postalCode: user?.user_metadata?.zip_code || '',
   });
 
-  const total = designDetails.basePrice + installationPrice + permitPlansPrice + (includePermitPlans ? 5995 : 0);
-
-  const handleShippingChange = (field: keyof ShippingAddress) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setShippingAddress(prev => ({ ...prev, [field]: e.target.value }));
-    if (sameAsShipping) {
-      setBillingAddress(prev => ({ ...prev, [field]: e.target.value }));
-    }
-  };
-
-  const handleBillingChange = (field: keyof BillingAddress) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBillingAddress(prev => ({ ...prev, [field]: e.target.value }));
-  };
+  // Calculate the order total
+  const orderTotal = designDetails.totalPrice + 
+                    (installationType === 'proassembly' ? installationPrice : 0) + 
+                    (includePermitPlans ? permitPlansPrice : 0);
 
   const validateForm = () => {
     if (!shippingAddress.name) return 'Please enter a shipping name';
@@ -155,97 +149,62 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
     return null;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    console.log('Starting handleSubmit with configId:', configId);
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
     setIsSubmitting(true);
-    setError('');
+    setError(null);
 
     try {
-      if (!user) {
-        throw new Error('You must be signed in to place an order');
+      // First verify the user is logged in
+      if (!user?.id) {
+        throw new Error('Please sign in to place an order');
       }
 
-      console.log('Submitting order with details:', {
-        designDetails,
-        installationType,
-        installationPrice,
-        permitPlansPrice,
-        includePermitPlans,
-        foundationType
+      console.log('Attempting to create order with:', {
+        user_id: user.id,
+        design_id: configId,
+        shipping_address: shippingAddress,
+        total_amount: orderTotal,
+        installation_type: installationType,
+        permit_plans: includePermitPlans,
+        foundation_type: foundationType
       });
 
-      const { data, error } = await supabase
+      // Create the order
+      const { data: order, error: insertError } = await supabase
         .from('orders')
-        .insert([
-          {
-            user_id: user.id,
-            // Basic Model Info
-            model_name: designDetails.modelName,
-            model_size: designDetails.modelSize,
-            square_footage: designDetails.squareFootage,
-            model_variant: designDetails.modelVariant,
-            model_description: designDetails.modelDescription,
+        .insert({
+          user_id: user.id,
+          design_id: configId,
+          shipping_address: shippingAddress,
+          billing_address: sameAsShipping ? shippingAddress : billingAddress,
+          total_amount: orderTotal,
+          installation_type: installationType,
+          permit_plans: includePermitPlans,
+          foundation_type: foundationType,
+          status: 'pending'
+        })
+        .select()
+        .single();
 
-            // Entry and Layout
-            entry_type: designDetails.entryType,
-            entry_price: designDetails.entryPrice,
-            window_style: designDetails.windowStyle,
-            window_style_price: designDetails.windowStylePrice,
-            is_floor_plan_mirrored: designDetails.isFloorPlanMirrored,
-
-            // Interior Configuration
-            interior_type: designDetails.interiorType,
-            interior_price: designDetails.interiorPrice,
-
-            // Interior Finishes
-            interior_finishes: designDetails.interiorFinishes,
-
-            // Exterior Finishes
-            siding: designDetails.siding,
-            siding_type: designDetails.sidingType,
-            siding_price: designDetails.sidingPrice,
-            door: designDetails.door,
-            door_price: designDetails.doorPrice,
-            trim: designDetails.trim,
-            trim_price: designDetails.trimPrice,
-            fascia: designDetails.fascia,
-            fascia_price: designDetails.fasciaPrice,
-            soffit: designDetails.soffit,
-            soffit_price: designDetails.soffitPrice,
-
-            // Additional Options
-            exterior_options: designDetails.exteriorOptions,
-            roof_options: designDetails.roofOptions,
-            window_options: designDetails.windowOptions,
-
-            // Installation and Shipping
-            installation_type: installationType,
-            installation_price: installationPrice,
-            permit_plans_price: permitPlansPrice || 0,
-
-            // Permit Plans and Foundation
-            include_permit_plans: includePermitPlans,
-            foundation_type: foundationType,
-
-            // Prices
-            base_price: designDetails.basePrice,
-            total_price: totalPrice,
-
-            // Status
-            status: 'pending',
-            created_at: new Date().toISOString()
-          }
-        ])
-        .select();
-
-      if (error) {
-        console.error('Error submitting order:', error);
-        throw new Error(error.message);
+      if (insertError) {
+        console.error('Error inserting order:', insertError);
+        throw insertError;
       }
 
-      console.log('Order submitted successfully:', data);
+      if (!order) {
+        throw new Error('Failed to create order');
+      }
+      
       onClose();
-      // You might want to redirect to an order confirmation page here
+      // Redirect to order confirmation page
+      window.location.href = `/orders/${order.id}/confirmation`;
     } catch (err) {
       console.error('Error in handleSubmit:', err);
       setError(err instanceof Error ? err.message : 'An error occurred while placing your order');
@@ -255,58 +214,50 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
   };
 
   return (
-    <Dialog
-      open={true}
-      onClose={onClose}
-      className="relative z-50"
-    >
-      {/* Backdrop */}
-      <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-
-      {/* Full-screen container */}
-      <div className="fixed inset-0 flex items-center justify-center p-4">
-        <Dialog.Panel className="mx-auto max-w-3xl w-full bg-white rounded-lg shadow-xl max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full z-50">
+      <div className="relative top-20 mx-auto p-5 w-full max-w-2xl">
+        <div className="relative bg-white rounded-lg shadow-lg">
           {/* Header */}
-          <div className="flex justify-between items-center p-6 border-b">
-            <Dialog.Title className="text-xl font-medium">
-              Order Summary
-            </Dialog.Title>
-            <button
-              onClick={onClose}
-              className="text-gray-400 hover:text-gray-500"
-            >
-              <X className="h-6 w-6" />
+          <div className="flex justify-between items-center p-4 border-b">
+            <h2 className="text-xl font-medium">Complete Your Order</h2>
+            <button onClick={onClose} className="text-gray-400 hover:text-gray-500">
+              <X className="w-6 h-6" />
             </button>
           </div>
 
-          {/* Content */}
-          <div className="p-6">
+          <div className="p-6 space-y-8">
             {/* Order Summary */}
-            <div className="mb-8">
-              <div className="space-y-4">
-                <div className="flex justify-between">
-                  <span>Your Studio Shed</span>
-                  <span>${designDetails.basePrice.toLocaleString()}</span>
+            <div className="space-y-4 bg-gray-50 rounded-lg p-6">
+              <h3 className="text-lg font-medium">Order Summary</h3>
+              <div className="space-y-3">
+                {/* Base Model + Options */}
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600">Your Studio Shed</span>
+                  <span className="font-medium">${designDetails.totalPrice.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span>Shipping</span>
-                  <span>${permitPlansPrice.toLocaleString()}</span>
-                </div>
+
+                {/* Installation if selected */}
                 {installationType === 'proassembly' && (
-                  <div className="flex justify-between">
-                    <span>ProAssembly: Shell Only</span>
-                    <span>${installationPrice.toLocaleString()}</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">ProAssembly</span>
+                    <span className="font-medium">${installationPrice.toLocaleString()}</span>
                   </div>
                 )}
+
+                {/* Permit Plans if selected */}
                 {includePermitPlans && (
-                  <div className="flex justify-between">
-                    <span>Permit Plans</span>
-                    <span>$5,995</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Permit Plans</span>
+                    <span className="font-medium">${permitPlansPrice.toLocaleString()}</span>
                   </div>
                 )}
-                <div className="flex justify-between font-medium pt-4 border-t">
-                  <span>Studio Shed Order Total</span>
-                  <span>${total.toLocaleString()}</span>
+
+                {/* Total */}
+                <div className="pt-3 border-t border-gray-200">
+                  <div className="flex justify-between items-center font-medium">
+                    <span>Studio Shed Order Total</span>
+                    <span>${orderTotal.toLocaleString()}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -341,7 +292,12 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
                     <input
                       type="text"
                       value={shippingAddress.name}
-                      onChange={handleShippingChange('name')}
+                      onChange={(e) => {
+                        setShippingAddress({ ...shippingAddress, name: e.target.value });
+                        if (sameAsShipping) {
+                          setBillingAddress({ ...billingAddress, name: e.target.value });
+                        }
+                      }}
                       className="w-full border rounded-md p-2"
                     />
                   </div>
@@ -350,7 +306,12 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
                     <input
                       type="text"
                       value={shippingAddress.address}
-                      onChange={handleShippingChange('address')}
+                      onChange={(e) => {
+                        setShippingAddress({ ...shippingAddress, address: e.target.value });
+                        if (sameAsShipping) {
+                          setBillingAddress({ ...billingAddress, address: e.target.value });
+                        }
+                      }}
                       className="w-full border rounded-md p-2"
                     />
                   </div>
@@ -359,7 +320,12 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
                     <input
                       type="text"
                       value={shippingAddress.apartment}
-                      onChange={handleShippingChange('apartment')}
+                      onChange={(e) => {
+                        setShippingAddress({ ...shippingAddress, apartment: e.target.value });
+                        if (sameAsShipping) {
+                          setBillingAddress({ ...billingAddress, apartment: e.target.value });
+                        }
+                      }}
                       className="w-full border rounded-md p-2"
                     />
                   </div>
@@ -369,7 +335,12 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
                       <input
                         type="text"
                         value={shippingAddress.city}
-                        onChange={handleShippingChange('city')}
+                        onChange={(e) => {
+                          setShippingAddress({ ...shippingAddress, city: e.target.value });
+                          if (sameAsShipping) {
+                            setBillingAddress({ ...billingAddress, city: e.target.value });
+                          }
+                        }}
                         className="w-full border rounded-md p-2"
                       />
                     </div>
@@ -378,7 +349,12 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
                       <input
                         type="text"
                         value={shippingAddress.state}
-                        onChange={handleShippingChange('state')}
+                        onChange={(e) => {
+                          setShippingAddress({ ...shippingAddress, state: e.target.value });
+                          if (sameAsShipping) {
+                            setBillingAddress({ ...billingAddress, state: e.target.value });
+                          }
+                        }}
                         className="w-full border rounded-md p-2"
                       />
                     </div>
@@ -387,7 +363,12 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
                       <input
                         type="text"
                         value={shippingAddress.postalCode}
-                        onChange={handleShippingChange('postalCode')}
+                        onChange={(e) => {
+                          setShippingAddress({ ...shippingAddress, postalCode: e.target.value });
+                          if (sameAsShipping) {
+                            setBillingAddress({ ...billingAddress, postalCode: e.target.value });
+                          }
+                        }}
                         className="w-full border rounded-md p-2"
                       />
                     </div>
@@ -420,7 +401,9 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
                       <input
                         type="text"
                         value={billingAddress.name}
-                        onChange={handleBillingChange('name')}
+                        onChange={(e) => {
+                          setBillingAddress({ ...billingAddress, name: e.target.value });
+                        }}
                         className="w-full border rounded-md p-2"
                       />
                     </div>
@@ -429,7 +412,9 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
                       <input
                         type="text"
                         value={billingAddress.address}
-                        onChange={handleBillingChange('address')}
+                        onChange={(e) => {
+                          setBillingAddress({ ...billingAddress, address: e.target.value });
+                        }}
                         className="w-full border rounded-md p-2"
                       />
                     </div>
@@ -438,7 +423,9 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
                       <input
                         type="text"
                         value={billingAddress.apartment}
-                        onChange={handleBillingChange('apartment')}
+                        onChange={(e) => {
+                          setBillingAddress({ ...billingAddress, apartment: e.target.value });
+                        }}
                         className="w-full border rounded-md p-2"
                       />
                     </div>
@@ -448,7 +435,9 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
                         <input
                           type="text"
                           value={billingAddress.city}
-                          onChange={handleBillingChange('city')}
+                          onChange={(e) => {
+                            setBillingAddress({ ...billingAddress, city: e.target.value });
+                          }}
                           className="w-full border rounded-md p-2"
                         />
                       </div>
@@ -457,7 +446,9 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
                         <input
                           type="text"
                           value={billingAddress.state}
-                          onChange={handleBillingChange('state')}
+                          onChange={(e) => {
+                            setBillingAddress({ ...billingAddress, state: e.target.value });
+                          }}
                           className="w-full border rounded-md p-2"
                         />
                       </div>
@@ -466,7 +457,9 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
                         <input
                           type="text"
                           value={billingAddress.postalCode}
-                          onChange={handleBillingChange('postalCode')}
+                          onChange={(e) => {
+                            setBillingAddress({ ...billingAddress, postalCode: e.target.value });
+                          }}
                           className="w-full border rounded-md p-2"
                         />
                       </div>
@@ -508,8 +501,8 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
               </div>
             </div>
           </div>
-        </Dialog.Panel>
+        </div>
       </div>
-    </Dialog>
+    </div>
   );
 }; 

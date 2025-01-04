@@ -370,6 +370,7 @@ export const DesignSummaryPage: React.FC = () => {
           permitPlansPrice={permitPlansPrice}
           foundationType={foundationType}
           totalPrice={totalPrice}
+          configId={id || ''}
         />
       )}
     </div>

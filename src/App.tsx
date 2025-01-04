@@ -11,6 +11,7 @@ import { ConsultationPage } from './pages/ConsultationPage';
 import { ConfiguratorProvider } from './context/ConfiguratorContext';
 import { ScrollToTop } from './components/layout/ScrollToTop';
 import { DesignSummaryPage } from './pages/DesignSummaryPage';
+import { OrderConfirmationPage } from './pages/OrderConfirmationPage';
 
 function App() {
   // Mock user and options for SuccessPage
@@ -38,6 +39,7 @@ function App() {
         } />
         <Route path="/consultation" element={<Layout><ConsultationPage /></Layout>} />
         <Route path="/designs/:id" element={<DesignSummaryPage />} />
+        <Route path="/orders/:orderId/confirmation" element={<OrderConfirmationPage />} />
       </Routes>
     </Router>
   );
