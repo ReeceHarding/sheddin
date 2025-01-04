@@ -114,7 +114,15 @@ export const DesignSummaryPage: React.FC = () => {
               {/* Design Info */}
               <div className="mb-8">
                 <div>
-                  <h1 className="text-2xl font-medium mb-2">{designDetails.modelName} {designDetails.modelSize}</h1>
+                  <div className="flex justify-between items-start mb-2">
+                    <h1 className="text-2xl font-medium">{designDetails.modelName} {designDetails.modelSize}</h1>
+                    <Link 
+                      to={`/design/summit/308`}
+                      className="bg-[#B87503] hover:bg-[#9A6203] text-white px-4 py-2 rounded-md text-sm transition-colors"
+                    >
+                      Edit Design
+                    </Link>
+                  </div>
                   <p className="text-gray-600">Studio · 1 Bath</p>
                   <p className="text-gray-600">{designDetails.interiorType}</p>
                   <p className="text-gray-600">({designDetails.modelVariant}) {designDetails.entryType} / {designDetails.windowStyle}</p>
@@ -137,68 +145,64 @@ export const DesignSummaryPage: React.FC = () => {
                 <div className="bg-gray-50 rounded-lg p-6">
                   <h3 className="text-lg font-medium mb-4">Your Studio Shed</h3>
                   <div className="space-y-3">
+                    {/* Base Price */}
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-600">{designDetails.modelName}</span>
-                      <div className="flex flex-col gap-1">
-                        <div className="text-2xl font-medium">${designDetails.basePrice.toLocaleString()}</div>
-                        <a 
-                          href="/design/summit/308" 
-                          className="text-[#B87503] hover:text-[#9A6203] transition-colors duration-200"
-                        >
-                          Edit your design →
-                        </a>
+                      <span className="text-gray-600">Base Price (Summit 308)</span>
+                      <span className="font-medium">${designDetails.basePrice.toLocaleString()}</span>
+                    </div>
+
+                    {/* Entry */}
+                    {designDetails.entryPrice > 0 && (
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600">Entry: {designDetails.entryType}</span>
+                        <span className="font-medium">${designDetails.entryPrice.toLocaleString()}</span>
                       </div>
-                    </div>
-                    <div className="mt-4">
-                      <div className="text-2xl font-medium">${designDetails.basePrice.toLocaleString()}</div>
-                      <a 
-                        href="/design/summit/308" 
-                        className="text-[#B87503] hover:text-[#9A6203] inline-block mt-1"
-                      >
-                        Edit your design →
-                      </a>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-600">Siding: {designDetails.siding}</span>
-                      <span className="font-medium">${designDetails.sidingPrice.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-600">Door: {designDetails.door}</span>
-                      <span className="font-medium">${designDetails.doorPrice.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-600">Trim: {designDetails.trim}</span>
-                      <span className="font-medium">${designDetails.trimPrice.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-600">Fascia: {designDetails.fascia}</span>
-                      <span className="font-medium">${designDetails.fasciaPrice.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-600">Soffit: {designDetails.soffit}</span>
-                      <span className="font-medium">${designDetails.soffitPrice.toLocaleString()}</span>
-                    </div>
+                    )}
+
+                    {/* Windows */}
+                    {designDetails.windowStylePrice > 0 && (
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600">Windows: {designDetails.windowStyle}</span>
+                        <span className="font-medium">${designDetails.windowStylePrice.toLocaleString()}</span>
+                      </div>
+                    )}
+
+                    {/* Interior */}
+                    {designDetails.interiorPrice > 0 && (
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600">Interior: {designDetails.interiorType}</span>
+                        <span className="font-medium">${designDetails.interiorPrice.toLocaleString()}</span>
+                      </div>
+                    )}
+
+                    {/* Siding */}
+                    {designDetails.sidingPrice > 0 && (
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600">Siding: {designDetails.siding}</span>
+                        <span className="font-medium">${designDetails.sidingPrice.toLocaleString()}</span>
+                      </div>
+                    )}
+
+                    {/* Exterior Options */}
                     {designDetails.exteriorOptions.map((option, index) => (
                       <div key={index} className="flex justify-between items-center">
                         <span className="text-gray-600">{option.name}</span>
                         <span className="font-medium">${option.price.toLocaleString()}</span>
                       </div>
                     ))}
+
+                    {/* Roof Options */}
                     {designDetails.roofOptions.map((option, index) => (
                       <div key={index} className="flex justify-between items-center">
                         <span className="text-gray-600">{option.name}</span>
                         <span className="font-medium">${option.price.toLocaleString()}</span>
                       </div>
                     ))}
-                    {designDetails.windowOptions.map((option, index) => (
-                      <div key={index} className="flex justify-between items-center">
-                        <span className="text-gray-600">{option.name}</span>
-                        <span className="font-medium">${option.price.toLocaleString()}</span>
-                      </div>
-                    ))}
+
+                    {/* Total */}
                     <div className="pt-3 border-t border-gray-200">
                       <div className="flex justify-between items-center font-medium">
-                        <span>Total</span>
+                        <span>Design Total</span>
                         <span>${designDetails.totalPrice.toLocaleString()}</span>
                       </div>
                     </div>

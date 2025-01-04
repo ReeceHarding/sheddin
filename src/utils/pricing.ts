@@ -9,8 +9,8 @@ interface PricingOptions {
 
 // Constants
 const MODEL_PRICES: Record<string, number> = {
-  'model-a': 92836,
-  'model-b': 94992,
+  'model-a': 41090,
+  'model-b': 41090,
 };
 
 const OPTION_PRICES = {
@@ -26,6 +26,7 @@ const OPTION_PRICES = {
   siding: {
     'plank': 2156,
     'cedar-plank': 8624,
+    'block': 3500,
   },
   exteriorAddon: {
     'metal-wainscot': 500,
@@ -42,19 +43,28 @@ const OPTION_PRICES = {
 export const calculateTotalPrice = (options: PricingOptions): number => {
   // Default to model-a if no model specified
   const basePrice = MODEL_PRICES[options.model || 'model-a'] || MODEL_PRICES['model-a'];
+  
+  let total = basePrice;
 
-  return Object.entries(options).reduce((total, [category, value]) => {
+  // Add option prices
+  Object.entries(options).forEach(([category, value]) => {
+    // Skip installation and permit costs for the design page total
+    if (category === 'installation' || category === 'permitPlans') {
+      return;
+    }
+    
     const optionCategory = OPTION_PRICES[category as keyof typeof OPTION_PRICES];
     if (value && optionCategory && value in optionCategory) {
-      return total + (optionCategory as Record<string, number>)[value];
+      total += (optionCategory as Record<string, number>)[value];
     }
-    return total;
-  }, basePrice);
+  });
+
+  return total;
 };
 
-// Calculate estimated total including all additional costs
-export const calculateEstimatedTotal = (basePrice: number, options: Record<string, any>): number => {
-  let total = basePrice;
+// This function is for the final summary page only
+export const calculateFinalTotal = (designTotal: number, options: Record<string, any>): number => {
+  let total = designTotal;
 
   // Add permit plans if selected
   if (options.permitPlans === 'include') {

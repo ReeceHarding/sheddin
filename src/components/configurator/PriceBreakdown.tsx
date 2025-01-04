@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth } from '../../hooks/useAuth';
+import { calculateTotalPrice } from '../../utils/pricing';
 
 interface PriceBreakdownProps {
   totalPrice: number;
@@ -40,6 +41,19 @@ export const PriceBreakdown: React.FC<PriceBreakdownProps> = ({
     }
   };
 
+  // Calculate individual prices
+  const sidingPrice = options.siding === 'cedar-plank' ? 8624 : 
+                     options.siding === 'plank' ? 2156 :
+                     options.siding === 'block' ? 3500 : 0;
+  const entryPrice = options.entry === 'side-entry' ? 2500 : 0;
+  const windowsPrice = options.windows === 'more-glass' ? 3500 : 0;
+  const interiorPrice = options.interior === 'fully-equipped' ? 25000 : 0;
+  const exteriorAddonPrice = options.exteriorAddon === 'metal-wainscot' ? 500 : 0;
+  const roofAddonPrice = options.roofAddon === 'back-eaves-6inches' ? 308 : 0;
+
+  // Calculate design total (base + options)
+  const designTotal = 41090 + sidingPrice + entryPrice + windowsPrice + interiorPrice + exteriorAddonPrice + roofAddonPrice;
+
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden">
       <div className="p-6">
@@ -50,18 +64,41 @@ export const PriceBreakdown: React.FC<PriceBreakdownProps> = ({
           <div>
             <h4 className="font-medium">Summit 308 Model B</h4>
             <p className="text-sm text-gray-600">14x22 (308 sq ft)</p>
-            <p className="text-sm text-gray-600">Side Entry / More Glass</p>
+            <p className="text-sm text-gray-600">{formatOptionName('entry', options.entry)} / {formatOptionName('windows', options.windows)}</p>
           </div>
-          <span className="font-medium">${totalPrice.toLocaleString()}</span>
+          <span className="font-medium">$41,090</span>
         </div>
 
         <div className="space-y-3">
+          {/* Entry and Windows */}
+          <div className="flex justify-between items-center">
+            <div>
+              <p className="text-sm">Entry: {formatOptionName('entry', options.entry)}</p>
+            </div>
+            <span className="text-sm">${entryPrice.toLocaleString()}</span>
+          </div>
+
+          <div className="flex justify-between items-center">
+            <div>
+              <p className="text-sm">Windows: {formatOptionName('windows', options.windows)}</p>
+            </div>
+            <span className="text-sm">${windowsPrice.toLocaleString()}</span>
+          </div>
+
+          {/* Interior */}
+          <div className="flex justify-between items-center">
+            <div>
+              <p className="text-sm">Interior: {formatOptionName('interior', options.interior)}</p>
+            </div>
+            <span className="text-sm">${interiorPrice.toLocaleString()}</span>
+          </div>
+
           {/* Exterior Options */}
           <div className="flex justify-between items-center">
             <div>
               <p className="text-sm">Siding: {formatOptionName('siding', options.siding)} / {formatOptionName('sidingColor', options.sidingColor)}</p>
             </div>
-            <span className="text-sm">$0</span>
+            <span className="text-sm">${sidingPrice.toLocaleString()}</span>
           </div>
 
           <div className="flex justify-between items-center">
@@ -92,32 +129,29 @@ export const PriceBreakdown: React.FC<PriceBreakdownProps> = ({
             <span className="text-sm">$0</span>
           </div>
 
-          <div className="flex justify-between items-center">
-            <div>
-              <p className="text-sm">Exterior Options</p>
+          {options.exteriorAddon !== 'none' && (
+            <div className="flex justify-between items-center">
+              <div>
+                <p className="text-sm">Exterior Add-on: {formatOptionName('exteriorAddon', options.exteriorAddon)}</p>
+              </div>
+              <span className="text-sm">${exteriorAddonPrice.toLocaleString()}</span>
             </div>
-            <span className="text-sm">$0</span>
-          </div>
+          )}
 
-          <div className="flex justify-between items-center">
-            <div>
-              <p className="text-sm">Roof Options</p>
+          {options.roofAddon !== 'none' && (
+            <div className="flex justify-between items-center">
+              <div>
+                <p className="text-sm">Roof Add-on: {formatOptionName('roofAddon', options.roofAddon)}</p>
+              </div>
+              <span className="text-sm">${roofAddonPrice.toLocaleString()}</span>
             </div>
-            <span className="text-sm">$0</span>
-          </div>
-
-          <div className="flex justify-between items-center">
-            <div>
-              <p className="text-sm">Window Options</p>
-            </div>
-            <span className="text-sm">$0</span>
-          </div>
+          )}
         </div>
 
         {/* Total */}
         <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-200">
-          <span className="font-medium">Total</span>
-          <span className="font-medium">${totalPrice.toLocaleString()}</span>
+          <span className="font-medium">Design Total</span>
+          <span className="font-medium">${designTotal.toLocaleString()}</span>
         </div>
 
         {/* Dynamic Button based on auth state */}
