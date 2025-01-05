@@ -163,7 +163,7 @@ export const ConsultationForm = () => {
           className="mt-1 h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary"
         />
         <label htmlFor="acceptEmails" className="text-sm text-gray-600">
-          I would like to receive design inspiration, product updates, and news from Studio Shed.
+          I would like to receive design inspiration, product updates, and news from Troo Solutions.
         </label>
       </div>
 

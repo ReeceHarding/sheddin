@@ -21,7 +21,7 @@ export const Header: React.FC<HeaderProps> = ({ totalPrice, selectedPlan, specs,
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center space-x-8">
-            <img src="/studio-shed-logo.svg" alt="Studio Shed" className="h-8" />
+            <img src="/troo-solutions-logo.svg" alt="Troo Solutions" className="h-8" />
             <nav className="hidden md:flex space-x-6">
               <button className="px-3 py-2 text-sm font-medium text-gray-900 bg-gray-100 rounded">Floor Plan</button>
               <button className="px-3 py-2 text-sm font-medium text-gray-500">Interior Kit</button>

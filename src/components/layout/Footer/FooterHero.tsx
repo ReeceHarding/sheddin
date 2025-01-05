@@ -13,7 +13,7 @@ export const FooterHero = () => {
         <div className="max-w-7xl mx-auto px-4 h-full flex items-center">
           <div className="max-w-lg">
             <h2 className="text-4xl font-bold mb-4">
-              Design Your Studio Shed
+              Design Your Troo Solutions
             </h2>
             <p className="text-lg mb-8">
               One shed does not fit all. Our innovative prefab solution is a flat-packed, 

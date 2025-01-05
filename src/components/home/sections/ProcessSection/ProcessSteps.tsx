@@ -6,7 +6,7 @@ export const ProcessSteps = () => (
       Predictable Process, Exceptional Results
     </h2>
     <p className="text-lg text-gray-600 mb-8">
-      Studio Shed has a proven track record of completing every project on-time 
+      Troo Solutions has a proven track record of completing every project on-time 
       and on-budget. Fixed pricing ensures you can start your project with confidence.
     </p>
     <img

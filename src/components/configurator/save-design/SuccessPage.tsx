@@ -1,5 +1,5 @@
 import React from 'react';
-import { StudioShedLogo } from './StudioShedLogo';
+import { TrooSolutionsLogo } from './TrooSolutionsLogo';
 import { DesignDetails } from './DesignDetails';
 import { FinancingSection } from './FinancingSection';
 import { ConsultationSection } from './ConsultationSection';
@@ -34,7 +34,7 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({ userId, options: initi
     <div className="min-h-screen bg-white">
       <header className="border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-4">
-          <StudioShedLogo />
+          <TrooSolutionsLogo />
         </div>
       </header>
 

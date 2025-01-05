@@ -40,7 +40,7 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold text-center mb-12">Choose your Studio Shed</h1>
+      <h1 className="text-3xl font-bold text-center mb-12">Choose your Troo Solutions</h1>
       
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {models.map(model => (

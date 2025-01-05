@@ -19,7 +19,7 @@ export const ProcessSection = () => {
           <div>
             <h2 className="text-3xl font-bold mb-6">Predictable Process, Exceptional Results</h2>
             <p className="text-gray-600 mb-8">
-              Studio Shed has a proven track record of completing every project on-time and on-budget. Fixed pricing ensures you can start your project with confidence.
+              Troo Solutions has a proven track record of completing every project on-time and on-budget. Fixed pricing ensures you can start your project with confidence.
             </p>
             <img
               src="/images/home/cyclePic.png"
@@ -31,7 +31,7 @@ export const ProcessSection = () => {
                 to="/design"
                 className="inline-block bg-primary text-white px-8 py-3 rounded-md hover:bg-primary-hover transition-colors"
               >
-                DESIGN & PRICE YOUR STUDIO SHED
+                DESIGN & PRICE YOUR TROO SOLUTIONS
               </Link>
             </div>
           </div>
@@ -40,7 +40,7 @@ export const ProcessSection = () => {
         <div className="relative h-[600px] mb-20">
           <img
             src="/images/home/thirdHeroImage.jpg"
-            alt="Studio Shed Exterior"
+            alt="Troo Solutions Exterior"
             className="w-full h-full object-cover rounded-lg"
           />
         </div>
@@ -48,7 +48,7 @@ export const ProcessSection = () => {
         <div className="relative h-[600px]">
           <img
             src="/images/home/fourthHeroImage.webp"
-            alt="Studio Shed Interior"
+            alt="Troo Solutions Interior"
             className="w-full h-full object-cover rounded-lg"
           />
         </div>

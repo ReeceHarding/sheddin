@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - Troo Solutions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #f8f8f8;
+        }
+        .logo {
+            max-width: 200px;
+            height: auto;
+        }
+        .order-ref {
+            background-color: #f4f4f4;
+            padding: 10px;
+            text-align: center;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+        }
+        .section-title {
+            color: #B87503;
+            font-size: 20px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #B87503;
+            padding-bottom: 5px;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        .next-steps {
+            background-color: #f8f8f8;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .step {
+            margin: 15px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        .step-number {
+            position: absolute;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            background-color: #B87503;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            font-size: 14px;
+        }
+        .contact {
+            text-align: center;
+            background-color: #f8f8f8;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 5px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="[LOGO_URL]" alt="Troo Solutions" class="logo">
+            <h1>Your Dream Space Journey Begins!</h1>
+        </div>
+
+        <div class="order-ref">
+            <strong>Order Reference:</strong> #{{orderReference}}
+        </div>
+
+        <p>Dear {{customerName}},</p>
+
+        <p>Thank you for choosing Troo Solutions as your partner in creating your perfect space. We're thrilled to begin this journey with you and are committed to making your vision a reality.</p>
+
+        <div class="section">
+            <h2 class="section-title">Your Custom Design Details</h2>
+            <div class="detail-row">
+                <strong>Model:</strong>
+                <span>{{modelName}}</span>
+            </div>
+            <div class="detail-row">
+                <strong>Dimensions:</strong>
+                <span>{{dimensions}}</span>
+            </div>
+            <div class="detail-row">
+                <strong>Entry Configuration:</strong>
+                <span>{{entryType}}</span>
+            </div>
+            <div class="detail-row">
+                <strong>Siding Selection:</strong>
+                <span>{{sidingType}}</span>
+            </div>
+            <div class="detail-row">
+                <strong>Window Package:</strong>
+                <span>{{windowPackage}}</span>
+            </div>
+            <div class="detail-row">
+                <strong>Interior Finish:</strong>
+                <span>{{interiorType}}</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Investment Summary</h2>
+            <div class="detail-row">
+                <strong>Base Price:</strong>
+                <span>${{basePrice}}</span>
+            </div>
+            <div class="detail-row">
+                <strong>Customization Options:</strong>
+                <span>${{optionsPrice}}</span>
+            </div>
+            <div class="detail-row">
+                <strong>Total Investment:</strong>
+                <span>${{totalPrice}}</span>
+            </div>
+        </div>
+
+        <div class="next-steps">
+            <h2 class="section-title">Your Journey: Next Steps</h2>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Design Review (1-2 Business Days)</h3>
+                <p>Our expert design team will carefully review your configuration to ensure everything is optimized for your needs.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Personalized Consultation</h3>
+                <p>We'll schedule a detailed consultation to refine your design, discuss customization options, and address any questions you may have.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Secure Payment Process</h3>
+                <p>You'll receive a secure payment link for your initial deposit, allowing us to begin the production process.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Project Timeline</h3>
+                <p>During your consultation, we'll provide a detailed timeline for production, delivery, and installation of your Troo Solutions space.</p>
+            </div>
+        </div>
+
+        <div class="contact">
+            <h2 class="section-title">We're Here to Help</h2>
+            <p>Our dedicated customer success team is available Monday through Friday, 9am-5pm MT</p>
+            <p><strong>Phone:</strong> (888) 900-3933</p>
+            <p><strong>Email:</strong> support@troosolutions.com</p>
+            <p>Your project manager will be assigned and will contact you within the next business day.</p>
+        </div>
+
+        <div class="footer">
+            <p>This email confirms receipt of your order. A copy of this confirmation has been stored in our system.</p>
+            <p>© 2024 Troo Solutions. All rights reserved.</p>
+            <p>This email was sent to {{customerEmail}}</p>
+        </div>
+    </div>
+</body>
+</html> 

@@ -42,7 +42,7 @@ export const ProcessFAQ = () => {
           question: 'Does my project need to comply with energy code?',
           answer: [
             "Chances are, yes. Any building that uses heating or cooling (conditioned) needs to comply with energy code. Further, any building that is considered 'habitable' is required to be conditioned.",
-            'CALIFORNIA: Additional material or equipment upgrades may be required outside of Studio Shed kit. Solar panels are required for all new conditioned residential buildings in CA.'
+            'CALIFORNIA: Additional material or equipment upgrades may be required outside of Troo Solutions kit. Solar panels are required for all new conditioned residential buildings in CA.'
           ]
         },
         {
@@ -59,7 +59,7 @@ export const ProcessFAQ = () => {
           question: 'Do I need a soils report?',
           answer: [
             "Building code allows us to make some assumptions, but ultimately the building official is allowed to request a soils report. If you are unsure, we recommend reaching out to the building department to determine if they'll require one for your project.",
-            "If any foundations on your site are showing signs of settling, or if you've needed to provide them in past, we recommend pursuing a soils report for your Studio Shed."
+            "If any foundations on your site are showing signs of settling, or if you've needed to provide them in past, we recommend pursuing a soils report for your Troo Solutions."
           ]
         }
       ]
@@ -84,7 +84,7 @@ export const ProcessFAQ = () => {
         },
         {
           question: 'Is this my only opportunity to ask questions during the project?',
-          answer: 'No, your Project Manager will be available all the way through completion of the unit to answer questions you or your contractor may have. Your Project Manager will also be your main point of contact if you have questions once the Studio Shed is complete.'
+          answer: 'No, your Project Manager will be available all the way through completion of the unit to answer questions you or your contractor may have. Your Project Manager will also be your main point of contact if you have questions once the Troo Solutions is complete.'
         },
         {
           question: 'Can I get away with making alterations after permit approval?',
@@ -106,11 +106,11 @@ export const ProcessFAQ = () => {
       questions: [
         {
           question: 'Does my unit include HVAC?',
-          answer: 'Only if a Studio Shed BATHROOM kit is purchased. Otherwise, this can be quoted by your contractor directly.'
+          answer: 'Only if a Troo Solutions BATHROOM kit is purchased. Otherwise, this can be quoted by your contractor directly.'
         },
         {
           question: 'How is my building anchored to the foundation?',
-          answer: 'Depending on the foundation type (concrete or wood), you will use concrete anchor bolts or structural wood screws provided by Studio Shed.'
+          answer: 'Depending on the foundation type (concrete or wood), you will use concrete anchor bolts or structural wood screws provided by Troo Solutions.'
         },
         {
           question: 'How long does installation take?',
@@ -122,7 +122,7 @@ export const ProcessFAQ = () => {
         },
         {
           question: 'Who is responsible for my inspections?',
-          answer: 'If DIY, you or your contractor should decide how these will be handled with the AHJ (authority having jurisdiction). If DIFM, your Studio Shed Network Contractor will schedule and be present (if necessary) for all inspections.'
+          answer: 'If DIY, you or your contractor should decide how these will be handled with the AHJ (authority having jurisdiction). If DIFM, your Troo Solutions Network Contractor will schedule and be present (if necessary) for all inspections.'
         },
         {
           question: 'What do I do if my shipment is damaged when it arrives?',
@@ -130,7 +130,7 @@ export const ProcessFAQ = () => {
         },
         {
           question: "What do I do if I need to store my building kit on site before it's installed?",
-          answer: 'Contact your Project Manager for guidance on how to properly store materials on-site. Please note that an unbuilt Studio Shed kit is not designed to withstand the elements for long periods of time if not properly protected.'
+          answer: 'Contact your Project Manager for guidance on how to properly store materials on-site. Please note that an unbuilt Troo Solutions kit is not designed to withstand the elements for long periods of time if not properly protected.'
         }
       ]
     }

@@ -11,7 +11,7 @@ interface ProcessStepProps {
   duration: string;
   description: string;
   image: string;
-  studioShedDeliverables: string[];
+  trooSolutionsDeliverables: string[];
   contractorDeliverables: {
     items: string[];
     subitems?: { title: string; items: string[] }[];
@@ -42,17 +42,17 @@ export const ProcessStep: React.FC<ProcessStepProps> = ({
   duration,
   description,
   image,
-  studioShedDeliverables,
+  trooSolutionsDeliverables,
   contractorDeliverables,
   customerDeliverables,
   index
 }) => {
   const [expandedSections, setExpandedSections] = useState<{
-    studio: boolean;
+    troo: boolean;
     contractor: boolean;
     customer: boolean;
   }>({
-    studio: false,
+    troo: false,
     contractor: false,
     customer: false
   });
@@ -69,7 +69,7 @@ export const ProcessStep: React.FC<ProcessStepProps> = ({
 
   const opacity = useTransform(scrollYProgress, [0, 0.2], [0.8, 1]);
 
-  const toggleSection = (section: 'studio' | 'contractor' | 'customer') => {
+  const toggleSection = (section: 'troo' | 'contractor' | 'customer') => {
     setExpandedSections(prev => ({
       ...prev,
       [section]: !prev[section]
@@ -104,11 +104,11 @@ export const ProcessStep: React.FC<ProcessStepProps> = ({
     }
   };
 
-  const renderStudioShedDeliverables = () => {
-    if (studioShedDeliverables.length <= 6) {
+  const renderTrooSolutionsDeliverables = () => {
+    if (trooSolutionsDeliverables.length <= 6) {
       return (
         <ul className="space-y-2">
-          {studioShedDeliverables.map((item, index) => (
+          {trooSolutionsDeliverables.map((item, index) => (
             <li key={index} className="flex items-start">
               <CheckIcon />
               <span className="text-[15px] text-gray-600">{item}</span>
@@ -118,9 +118,9 @@ export const ProcessStep: React.FC<ProcessStepProps> = ({
       );
     }
 
-    const midPoint = Math.ceil(studioShedDeliverables.length / 2);
-    const leftColumn = studioShedDeliverables.slice(0, midPoint);
-    const rightColumn = studioShedDeliverables.slice(midPoint);
+    const midPoint = Math.ceil(trooSolutionsDeliverables.length / 2);
+    const leftColumn = trooSolutionsDeliverables.slice(0, midPoint);
+    const rightColumn = trooSolutionsDeliverables.slice(midPoint);
 
     return (
       <div className="grid grid-cols-2 gap-6">
@@ -185,21 +185,21 @@ export const ProcessStep: React.FC<ProcessStepProps> = ({
 
               {/* Deliverables sections */}
               <div className="space-y-3">
-                {studioShedDeliverables.length > 0 && (
+                {trooSolutionsDeliverables.length > 0 && (
                   <div className={`border rounded-lg overflow-hidden bg-white/95 ${getBorderColor()}`}>
                     <button
-                      onClick={() => toggleSection('studio')}
+                      onClick={() => toggleSection('troo')}
                       className="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition-colors"
                     >
-                      <h3 className="font-semibold text-[15px]">STUDIO SHED DELIVERABLES</h3>
+                      <h3 className="font-semibold text-[15px]">TROO SOLUTIONS DELIVERABLES</h3>
                       <ChevronDown 
                         className={`h-5 w-5 text-gray-400 transition-transform duration-200 ${
-                          expandedSections.studio ? 'rotate-180' : ''
+                          expandedSections.troo ? 'rotate-180' : ''
                         }`}
                       />
                     </button>
                     <AnimatePresence>
-                      {expandedSections.studio && (
+                      {expandedSections.troo && (
                         <motion.div
                           initial={{ height: 0 }}
                           animate={{ height: "auto" }}
@@ -207,7 +207,7 @@ export const ProcessStep: React.FC<ProcessStepProps> = ({
                           transition={{ duration: 0.2 }}
                           className="px-4 pb-4"
                         >
-                          {renderStudioShedDeliverables()}
+                          {renderTrooSolutionsDeliverables()}
                         </motion.div>
                       )}
                     </AnimatePresence>

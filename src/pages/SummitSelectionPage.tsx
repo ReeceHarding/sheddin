@@ -69,7 +69,7 @@ export const SummitSelectionPage = () => {
         </div>
 
         <div className="text-center text-sm text-gray-500">
-          © <a href="/" className="hover:text-gray-700">Studio Shed - ADUs and Studios</a>
+          © <a href="/" className="hover:text-gray-700">Troo Solutions - ADUs and Studios</a>
         </div>
       </div>
     </div>

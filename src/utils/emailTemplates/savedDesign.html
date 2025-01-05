@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Saved Design - Troo Solutions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #f8f8f8;
+        }
+        .logo {
+            max-width: 200px;
+            height: auto;
+        }
+        .design-preview {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .design-preview img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        .section-title {
+            color: #B87503;
+            font-size: 20px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #B87503;
+            padding-bottom: 5px;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #B87503;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .cta-button:hover {
+            background-color: #9A6203;
+        }
+        .contact {
+            text-align: center;
+            background-color: #f8f8f8;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 5px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 12px;
+            border-top: 1px solid #eee;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="[LOGO_URL]" alt="Troo Solutions" class="logo">
+            <h1>Your Custom Design is Saved!</h1>
+        </div>
+
+        <div class="design-preview">
+            <img src="{{designPreviewUrl}}" alt="Your Custom Design Preview">
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Your Custom Design Specifications</h2>
+            <div class="detail-row">
+                <strong>Model:</strong>
+                <span>{{modelName}}</span>
+            </div>
+            <div class="detail-row">
+                <strong>Size:</strong>
+                <span>{{dimensions}}</span>
+            </div>
+            <div class="detail-row">
+                <strong>Entry Configuration:</strong>
+                <span>{{entryType}}</span>
+            </div>
+            <div class="detail-row">
+                <strong>Interior:</strong>
+                <span>{{interiorType}}</span>
+            </div>
+            <div class="detail-row">
+                <strong>Flooring:</strong>
+                <span>{{flooring}}</span>
+            </div>
+            <div class="detail-row">
+                <strong>Finishes:</strong>
+                <span>{{finishes}}</span>
+            </div>
+            <div class="detail-row">
+                <strong>Siding:</strong>
+                <span>{{sidingType}} - {{sidingColor}}</span>
+            </div>
+            <div class="detail-row">
+                <strong>Door Color:</strong>
+                <span>{{doorColor}}</span>
+            </div>
+            <div class="detail-row">
+                <strong>Trim:</strong>
+                <span>{{trimType}}</span>
+            </div>
+            <div class="detail-row">
+                <strong>Fascia:</strong>
+                <span>{{fasciaColor}}</span>
+            </div>
+            <div class="detail-row">
+                <strong>Soffit:</strong>
+                <span>{{soffitType}}</span>
+            </div>
+            <div class="detail-row">
+                <strong>Add-Ons:</strong>
+                <span>{{addOns}}</span>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="{{designUrl}}" class="cta-button">
+                VIEW OR EDIT YOUR DESIGN
+            </a>
+            <p style="margin-top: 10px; color: #666;">
+                Your design will be saved for 30 days
+            </p>
+        </div>
+
+        <div class="contact">
+            <h2 class="section-title">Questions? We're Here to Help</h2>
+            <p>Our design experts are ready to assist you</p>
+            <p><strong>Email:</strong> support@troosolutions.com</p>
+            <p><strong>Phone:</strong> (888) 900-3933</p>
+            <p>Available Monday through Friday, 9am-5pm MT</p>
+        </div>
+
+        <div class="footer">
+            <p>Troo Solutions</p>
+            <p>1500 Cherry St. Suite S</p>
+            <p>Louisville, CO 80027</p>
+            <p><a href="https://troosolutions.com" style="color: #B87503; text-decoration: none;">www.troosolutions.com</a></p>
+            <p style="margin-top: 20px;">© 2024 Troo Solutions. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html> 

@@ -37,7 +37,7 @@ export const ConfiguratorHeader: React.FC<ConfiguratorHeaderProps> = ({
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center space-x-8">
-            <img src="/studio-shed-logo.svg" alt="Studio Shed" className="h-8" />
+            <img src="/troo-solutions-logo.svg" alt="Troo Solutions" className="h-8" />
             <nav className="hidden md:flex space-x-6">
               {tabs.map(tab => (
                 <button

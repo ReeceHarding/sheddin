@@ -21,7 +21,7 @@ export const PricingDetails: React.FC<PricingDetailsProps> = ({ options, basePri
 
   return (
     <div className="space-y-4 p-6 border-t border-b">
-      <h3 className="text-xl font-medium text-gray-900">Your Studio Shed</h3>
+      <h3 className="text-xl font-medium text-gray-900">Your Troo Solutions</h3>
       
       <div className="space-y-3">
         {pricingItems.map((item, index) => (

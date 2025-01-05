@@ -6,7 +6,7 @@ import { ModelsSection } from '../components/home/sections/ModelsSection';
 import { InvestmentSection } from '../components/home/sections/InvestmentSection';
 import { ProcessOverviewSection } from '../components/home/sections/ProcessOverviewSection';
 import { ValuePropositionSection } from '../components/home/sections/ValuePropositionSection';
-import { WhyStudioShedSection } from '../components/home/sections/WhyStudioShedSection';
+import { WhyTrooSolutionsSection } from '../components/home/sections/WhyTrooSolutionsSection';
 import { ProcessSection } from '../components/home/sections/ProcessSection';
 import { VirtualShowroomSection } from '../components/home/sections/VirtualShowroomSection';
 
@@ -19,7 +19,7 @@ export const HomePage = () => {
       <InvestmentSection />
       <ProcessOverviewSection />
       <ValuePropositionSection />
-      <WhyStudioShedSection />
+      <WhyTrooSolutionsSection />
       <ProcessSection />
       <VirtualShowroomSection />
     </Layout>

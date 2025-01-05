@@ -33,11 +33,11 @@ export const QuickInstall = () => (
     <div>
       <img
         src="/images/home/fastTrackADUPeoplePic.jpg"
-        alt="Happy Studio Shed Customers"
+        alt="Happy Troo Solutions Customers"
         className="w-full rounded-lg shadow-lg mb-4"
       />
       <p className="text-sm italic text-gray-600">
-        "We were amazed at how straightforward the Studio Shed process was. 
+        "We were amazed at how straightforward the Troo Solutions process was. 
         No cranes, no fuss - just a beautiful, functional space." 
         - The Jumps, Arizona
       </p>

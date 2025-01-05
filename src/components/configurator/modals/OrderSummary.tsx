@@ -21,7 +21,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
       
       <div className="space-y-2">
         <div className="flex justify-between">
-          <span>Your Studio Shed</span>
+          <span>Your Troo Solutions</span>
           <span>{formatPrice(productTotal)}</span>
         </div>
         <div className="flex justify-between">
@@ -33,7 +33,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
           <span>{formatPrice(installationCost)}</span>
         </div>
         <div className="flex justify-between font-medium pt-2 border-t">
-          <span>Studio Shed Order Total</span>
+          <span>Troo Solutions Order Total</span>
           <span>{formatPrice(total)}</span>
         </div>
       </div>

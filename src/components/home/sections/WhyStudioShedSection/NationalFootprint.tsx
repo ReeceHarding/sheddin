@@ -19,7 +19,7 @@ export const NationalFootprint = () => (
         Build Your Dream Space with the National Leader in ADUs
       </h3>
       <p className="text-lg text-gray-600">
-        At Studio Shed, we combine innovative design with superior craftsmanship 
+        At Troo Solutions, we combine innovative design with superior craftsmanship 
         to create structures that stand the test of time.
       </p>
       <Link
@@ -27,7 +27,7 @@ export const NationalFootprint = () => (
         className="inline-block bg-[#B87503] text-white px-8 py-4 rounded-md 
                  hover:bg-[#9A6203] transition-all transform hover:scale-105 duration-200"
       >
-        Design & Price Your Studio Shed
+        Design & Price Your Troo Solutions
       </Link>
     </div>
   </div>

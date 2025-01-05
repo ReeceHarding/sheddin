@@ -23,7 +23,7 @@ export const PermitPlansModal: React.FC<PermitPlansModalProps> = ({ onClose, onS
           {/* Header */}
           <div className="flex justify-between items-center p-6">
             <Dialog.Title className="text-xl font-medium">
-              Do you want to include a permit plan set by Studio Shed?
+              Do you want to include a permit plan set by Troo Solutions?
             </Dialog.Title>
             <button
               onClick={onClose}
@@ -57,15 +57,15 @@ export const PermitPlansModal: React.FC<PermitPlansModalProps> = ({ onClose, onS
               {/* Include Plan Set Option */}
               <div className="border rounded-lg p-6 flex flex-col h-full">
                 <div className="flex-grow">
-                  <h3 className="text-lg font-medium mb-4">Include permit plan set by Studio Shed</h3>
+                  <h3 className="text-lg font-medium mb-4">Include permit plan set by Troo Solutions</h3>
                   <p className="text-gray-600 text-sm mb-4">
-                    This supporting product is only necessary if you are required to permit your Studio Shed.
+                    This supporting product is only necessary if you are required to permit your Troo Solutions.
                   </p>
                   <p className="text-gray-600 text-sm mb-4">
                     Includes: site, architectural, energy, structural, and electrical plans compliant with local codes for wind, snow, seismic, and soil.
                   </p>
                   <p className="text-gray-600 text-sm mb-4">
-                    Exclusions include, but are not limited to: Applications, Submittal, Fees, Deferred Submittals (i.e. sprinklers/solar), or work out of Studio Shed scope.
+                    Exclusions include, but are not limited to: Applications, Submittal, Fees, Deferred Submittals (i.e. sprinklers/solar), or work out of Troo Solutions scope.
                   </p>
                   <p className="text-gray-600 text-sm">
                     SHELL-ONLY Plan Set includes energy calculations and specifications for water heater and HVAC.
@@ -75,7 +75,7 @@ export const PermitPlansModal: React.FC<PermitPlansModalProps> = ({ onClose, onS
                   onClick={() => onSelect(true)}
                   className="w-full bg-[#B87503] text-white py-3 rounded-md hover:bg-[#9A6203] transition-colors mt-8"
                 >
-                  <span className="block font-medium">Select permit plan set by Studio Shed</span>
+                  <span className="block font-medium">Select permit plan set by Troo Solutions</span>
                   <span className="text-sm">$5,995 Additional Fee</span>
                 </button>
               </div>

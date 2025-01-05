@@ -42,7 +42,7 @@ export const FoundationTypeModal: React.FC<FoundationTypeModalProps> = ({ onClos
                   <h3 className="text-lg font-medium mb-4">Concrete Slab</h3>
                   <p className="text-gray-600 text-sm">
                     Because every site is different, other than for our pre-configured selections, 
-                    Studio Shed does not directly quote the cost of foundations or pour concrete. 
+                    Troo Solutions does not directly quote the cost of foundations or pour concrete. 
                     However, this is a service that the majority of our professional installers provide, 
                     and they will work with you directly to get the best foundation for your site in an 
                     efficient way.

@@ -8,7 +8,7 @@ export const ProcessGlance = () => {
         <div className="relative">
           <img 
             src="/images/process/processAtAGlance.png"
-            alt="Studio Shed Process Timeline"
+            alt="Troo Solutions Process Timeline"
             className="w-full h-auto"
           />
         </div>

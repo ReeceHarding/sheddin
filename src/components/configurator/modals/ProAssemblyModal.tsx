@@ -40,9 +40,9 @@ export const ProAssemblyModal: React.FC<ProAssemblyModalProps> = ({ onClose, onS
               <div className="border rounded-lg p-6">
                 <h3 className="text-lg font-medium mb-4">Do-It-Yourself (DIY)</h3>
                 <p className="text-gray-600 text-sm mb-8">
-                  Every DIY Studio Shed purchase gives you access to the same resources and instructions 
+                  Every DIY Troo Solutions purchase gives you access to the same resources and instructions 
                   we use to train and certify our network of installers, including 3D assembly instructions, 
-                  construction plans for the Studio Shed you purchased, and a video that walks through the 
+                  construction plans for the Troo Solutions you purchased, and a video that walks through the 
                   entire installation process. And, of course, we are only a phone call away if you have questions.
                 </p>
                 <button
@@ -58,14 +58,14 @@ export const ProAssemblyModal: React.FC<ProAssemblyModalProps> = ({ onClose, onS
               <div className="border rounded-lg p-6">
                 <h3 className="text-lg font-medium mb-4">ProAssembly</h3>
                 <p className="text-gray-600 text-sm mb-4">
-                  Our installation partner takes delivery of your Studio Shed and installs all wall panels, 
+                  Our installation partner takes delivery of your Troo Solutions and installs all wall panels, 
                   roofing and siding. Every member of our professional team of installers is certified and insured, 
-                  and will deliver the same service we would expect in our own home. Studio Shed will manage the 
+                  and will deliver the same service we would expect in our own home. Troo Solutions will manage the 
                   scheduling of your delivery and installation, and your installer will perform a walk-through 
                   with you at the completion of your installation.
                 </p>
                 <p className="text-sm text-gray-500 mb-8">
-                  Subject to availability. Flat rate, included in Studio Shed order.
+                  Subject to availability. Flat rate, included in Troo Solutions order.
                 </p>
                 <button
                   onClick={() => onSelect('proassembly', 14181)}

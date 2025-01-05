@@ -34,7 +34,7 @@ export const ProcessHero: React.FC<ProcessHeroProps> = ({
           <div className="absolute inset-0 bg-black/50 z-10"></div>
           <img
             src={backgroundImage}
-            alt="Studio Shed Process"
+            alt="Troo Solutions Process"
             className="w-full h-full object-cover"
           />
         </div>

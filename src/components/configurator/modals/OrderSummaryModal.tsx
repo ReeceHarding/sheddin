@@ -302,7 +302,7 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
               <div className="space-y-3">
                 {/* Base Model + Options */}
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Your Studio Shed</span>
+                  <span className="text-gray-600">Your Troo Solutions</span>
                   <span className="font-medium">${designDetails.totalPrice.toLocaleString()}</span>
                 </div>
 
@@ -325,7 +325,7 @@ export const OrderSummaryModal: React.FC<OrderSummaryModalProps> = ({
                 {/* Total */}
                 <div className="pt-3 border-t border-gray-200">
                   <div className="flex justify-between items-center font-medium">
-                    <span>Studio Shed Order Total</span>
+                    <span>Troo Solutions Order Total</span>
                     <span>${orderTotal.toLocaleString()}</span>
                   </div>
                 </div>

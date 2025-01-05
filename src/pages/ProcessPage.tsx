@@ -8,7 +8,7 @@ const ProcessPage: React.FC = () => {
       <ProcessHero 
         title="How It Works!"
         subtitle="Planning, Design and Installation"
-        description="Start with our 3D Design Center to create a design, then schedule a free consultation with a Studio Shed advisor to plan your project. The Studio team will shepherd your project through permitting and fulfill your dream design in a matter of months."
+        description="Start with our 3D Design Center to create a design, then schedule a free consultation with a Troo Solutions advisor to plan your project. The Troo Solutions team will shepherd your project through permitting and fulfill your dream design in a matter of months."
         backgroundImage="/images/process/hero.webp"
       />
       

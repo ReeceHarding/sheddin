@@ -57,7 +57,7 @@ export const PriceBreakdown: React.FC<PriceBreakdownProps> = ({
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden">
       <div className="p-6">
-        <h3 className="text-lg font-semibold mb-4">Your Studio Shed</h3>
+        <h3 className="text-lg font-semibold mb-4">Your Troo Solutions</h3>
         
         {/* Base Model */}
         <div className="flex justify-between items-center mb-4">

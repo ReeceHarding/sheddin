@@ -13,7 +13,7 @@ export const OrderConfirmationPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 py-4">
           <img 
             src="/images/logo.png" 
-            alt="Studio Shed" 
+            alt="Troo Solutions" 
             className="h-8"
           />
         </div>
@@ -80,7 +80,7 @@ export const OrderConfirmationPage: React.FC = () => {
         <div className="mb-12">
           <img 
             src="/images/home/fastTrackADUPeoplePic.jpg"
-            alt="Studio Shed Team"
+            alt="Troo Solutions Team"
             className="w-full rounded-lg"
           />
           <p className="text-center text-gray-600 mt-4">
@@ -96,7 +96,7 @@ export const OrderConfirmationPage: React.FC = () => {
           </p>
           <div className="space-y-2">
             <p className="font-medium">Call us: (888) 900-3933</p>
-            <p className="font-medium">Email: design@studioshed.com</p>
+            <p className="font-medium">Email: design@troosolutions.com</p>
           </div>
         </div>
       </main>

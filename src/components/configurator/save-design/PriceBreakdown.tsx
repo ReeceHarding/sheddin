@@ -21,7 +21,7 @@ export const PriceBreakdown: React.FC<PriceBreakdownProps> = ({ options }) => {
 
   return (
     <div className="px-6 py-4 border-t border-b">
-      <h3 className="font-medium mb-4">Your Studio Shed</h3>
+      <h3 className="font-medium mb-4">Your Troo Solutions</h3>
       <div className="space-y-2">
         {items.map((item, index) => (
           <div key={index} className="flex justify-between text-gray-700">

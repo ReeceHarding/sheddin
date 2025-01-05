@@ -27,7 +27,7 @@ export const EXTERIOR_OPTIONS = {
   ],
   trimColors: [
     { id: 'aluminum', label: 'Aluminum', color: '#DCDCDC' },
-    { id: 'studio-shed-bronze', label: 'Studio Shed Bronze', color: '#CD7F32' }
+    { id: 'troo-solutions-bronze', label: 'Troo Solutions Bronze', color: '#CD7F32' }
   ],
   exteriorAddons: [
     { id: 'none', label: 'None', price: 0 },

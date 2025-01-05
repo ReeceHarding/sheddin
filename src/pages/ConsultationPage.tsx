@@ -19,7 +19,7 @@ export const ConsultationPage = () => {
               <div className="relative h-full min-h-[600px]">
                 <img
                   src="/images/consultation/consultation.png"
-                  alt="Studio Shed Consultation"
+                  alt="Troo Solutions Consultation"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
               </div>

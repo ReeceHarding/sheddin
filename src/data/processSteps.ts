@@ -13,7 +13,7 @@ export const processSteps: ProcessStep[] = [
     id: "1",
     title: "Design Your Studio",
     duration: "15-30 minutes",
-    description: "Use our 3D Design Center to create your perfect Studio Shed. Choose your model, size, and customize with colors and options.",
+    description: "Use our 3D Design Center to create your perfect Troo Solutions. Choose your model, size, and customize with colors and options.",
     image: "/images/process/design.jpg",
     deliverables: ["3D Design", "Price Quote"],
     customerDeliverables: []
@@ -49,7 +49,7 @@ export const processSteps: ProcessStep[] = [
     id: "5",
     title: "Installation",
     duration: "3-5 days",
-    description: "Our certified installation team will assemble your Studio Shed on site.",
+    description: "Our certified installation team will assemble your Troo Solutions on site.",
     image: "/images/process/installation.jpg",
     deliverables: ["Completed Studio", "Final Inspection"],
     customerDeliverables: ["Site Access"]

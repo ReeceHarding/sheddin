@@ -9,7 +9,7 @@ export const ConsultationLink = () => (
       className="inline-flex items-center text-[#B87503] hover:text-[#9A6203] 
                 font-medium transition-colors group gap-2"
     >
-      Request a Free Consultation with a Studio Shed Advisor
+      Request a Free Consultation with a Troo Solutions Advisor
       <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
     </Link>
   </div>

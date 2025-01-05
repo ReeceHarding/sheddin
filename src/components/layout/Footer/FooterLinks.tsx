@@ -8,7 +8,7 @@ export const FooterLinks = () => {
       { label: 'Design Center', path: '/design' },
       { label: 'Blog', path: '/blog' },
       { label: 'FAQ', path: '/faq' },
-      { label: 'About Studio Shed', path: '/about' },
+      { label: 'About Troo Solutions', path: '/about' },
     ],
     ADUS: [
       { label: 'Summit Series', path: '/models/summit' },

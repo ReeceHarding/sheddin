@@ -8,7 +8,7 @@ export const ProcessOverviewSection = () => {
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold mb-6">Our Process</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            From design through installation, we're here for you every step of the way. Get started with our 3D Design Center to see options and schedule a free consultation with a Studio Shed advisor.
+            From design through installation, we're here for you every step of the way. Get started with our 3D Design Center to see options and schedule a free consultation with a Troo Solutions advisor.
           </p>
         </div>
 

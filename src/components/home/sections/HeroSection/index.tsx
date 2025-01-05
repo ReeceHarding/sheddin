@@ -8,7 +8,7 @@ export const HeroSection = () => {
       <div className="absolute inset-0">
         <img
           src="/images/home/heroImage.webp"
-          alt="Studio Shed Hero"
+          alt="Troo Solutions Hero"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-transparent" />

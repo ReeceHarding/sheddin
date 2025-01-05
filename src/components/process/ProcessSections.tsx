@@ -9,16 +9,16 @@ export const ProcessSections = () => {
     preTitle: 'Start with our Design Center',
     title: 'Site Visit',
     duration: '2+ Weeks',
-    description: "When installation is purchased, we initiate communication with a contractor within Studio Shed's installation network. This contractor will come review your project on-site and with their input you will fill out an informational checklist. This document provides information necessary for the site work estimate and is required to inform Studio Shed's permit plan set.",
+    description: "When installation is purchased, we initiate communication with a contractor within Troo Solutions' installation network. This contractor will come review your project on-site and with their input you will fill out an informational checklist. This document provides information necessary for the site work estimate and is required to inform Troo Solutions' permit plan set.",
     image: '/images/process/secondHero.jpg',
-    studioShedDeliverables: [
-      'Introduction to Studio Shed Network Contractor'
+    trooSolutionsDeliverables: [
+      'Introduction to Troo Solutions Network Contractor'
     ],
     contractorDeliverables: {
       items: [
         'Site Visit Permitted Checklist',
         "Answer Customer's Pre-Construction Questions",
-        'Estimate for Scope Outside of Studio Shed Kit'
+        'Estimate for Scope Outside of Troo Solutions Kit'
       ],
       subitems: [
         {
@@ -32,7 +32,7 @@ export const ProcessSections = () => {
           ]
         },
         {
-          title: 'Estimate for Scope Outside of Studio Shed Kit includes:',
+          title: 'Estimate for Scope Outside of Troo Solutions Kit includes:',
           items: [
             'Foundation',
             'Site Work',
@@ -55,9 +55,9 @@ export const ProcessSections = () => {
     preSubtitle: '1st Payment',
     title: 'Design Coordination',
     duration: '2+ Weeks',
-    description: "Studio Shed's Design Coordinator prepares your site plan, floor plan, and elevations based on your configuration and the site visit. We share this Coordination Set with you for final approval then include them in the contract.",
+    description: "Troo Solutions' Design Coordinator prepares your site plan, floor plan, and elevations based on your configuration and the site visit. We share this Coordination Set with you for final approval then include them in the contract.",
     image: '/images/process/designCoordination.png',
-    studioShedDeliverables: [
+    trooSolutionsDeliverables: [
       'Exterior Shell Design and Colors',
       'Floor Plan and Interior Layout',
       'Local Energy Compliance',
@@ -79,9 +79,9 @@ export const ProcessSections = () => {
     preSubtitle: '2nd Payment',
     title: 'Project Design',
     duration: '4+ Weeks',
-    description: "Studio Shed's Project Designer works with our 3rd party Structural Engineer to prepare your unique Permit and Construction documents based on your configuration and local design criteria.",
+    description: "Troo Solutions' Project Designer works with our 3rd party Structural Engineer to prepare your unique Permit and Construction documents based on your configuration and local design criteria.",
     image: '/images/process/projectDesign.jpg',
-    studioShedDeliverables: [
+    trooSolutionsDeliverables: [
       'Site plan',
       'Design sections and details',
       'Electrical schematic',
@@ -111,7 +111,7 @@ export const ProcessSections = () => {
     duration: '4-12 Weeks',
     description: "Your local building department's plan review timeline can vary greatly. We often recommend engaging the planning department early on in the project to make sure there are not unforeseen hurdles in their process. Your Project Manager and Project Designer are available to address any comments or concerns from the building department after they review the plans.",
     image: '/images/process/permitting.jpg',
-    studioShedDeliverables: [
+    trooSolutionsDeliverables: [
       'Revisions if required',
       'Itemized response letter',
       'Communication with authority having jurisdiction as required to resolve any concerns'
@@ -131,9 +131,9 @@ export const ProcessSections = () => {
     preSubtitle: 'Final Payment',
     title: 'Scope Call & Production',
     duration: '2-4 Weeks',
-    description: "Studio Shed's Project Manager (PM) approved plans (Coordination Set) based on your configuration and the site visit. The PM schedules a Scope call with designated installer and timeline to shipout and installation discussed.",
+    description: "Troo Solutions' Project Manager (PM) approved plans (Coordination Set) based on your configuration and the site visit. The PM schedules a Scope call with designated installer and timeline to shipout and installation discussed.",
     image: '/images/process/scopeCallAndProduction.png',
-    studioShedDeliverables: [
+    trooSolutionsDeliverables: [
       'Schedule scope call',
       'Schedule production date',
       'Review of custom/special considerations – i.e. windows, glazing, inspections, etc.',
@@ -145,7 +145,7 @@ export const ProcessSections = () => {
     },
     customerDeliverables: [
       'Scope call',
-      'Questions for the Studio Shed team',
+      'Questions for the Troo Solutions team',
       'Desired construction timeline'
     ]
   };
@@ -158,7 +158,7 @@ export const ProcessSections = () => {
     duration: '1-2 Weeks',
     description: "Once the unit ships, you will have 30 days of free local storage to coordinate delivery to your site. If your site is ready for construction and you have coordinated with your contractor, installation can begin as soon as you receive delivery. Your Project Manager is your best resource to assist in answering install related questions as the unit is being built.",
     image: '/images/process/installation.jpg',
-    studioShedDeliverables: [
+    trooSolutionsDeliverables: [
       'Support Network Contractor or DIY installation by phone and email as needed',
       'Provide applicable project and installation materials to support a successful project',
       'Provide support and solutions for any material damaged upon receipt or warranty claims',

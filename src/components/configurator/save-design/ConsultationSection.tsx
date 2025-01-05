@@ -4,7 +4,7 @@ import { Calendar } from 'lucide-react';
 export const ConsultationSection = () => (
   <div className="pt-8">
     <h2 className="text-xl font-medium mb-2">
-      Schedule a Free Online Consultation with a Studio Shed Advisor
+      Schedule a Free Online Consultation with a Troo Solutions Advisor
     </h2>
     <p className="text-gray-600 mb-4">
       Book your free, no-obligation Zoom consultation with our friendly experts to discuss your

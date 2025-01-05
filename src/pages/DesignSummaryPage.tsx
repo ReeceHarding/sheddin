@@ -143,7 +143,7 @@ export const DesignSummaryPage: React.FC = () => {
               {/* Design Details Expandable Section */}
               <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isDetailsOpen ? 'max-h-[1000px] mb-8' : 'max-h-0'}`}>
                 <div className="bg-gray-50 rounded-lg p-6">
-                  <h3 className="text-lg font-medium mb-4">Your Studio Shed</h3>
+                  <h3 className="text-lg font-medium mb-4">Your Troo Solutions</h3>
                   <div className="space-y-3">
                     {/* Base Price */}
                     <div className="flex justify-between items-center">
