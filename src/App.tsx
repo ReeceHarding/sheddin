@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
 import { HomePage } from './pages/HomePage';
 import { ModelSelectionPage } from './pages/ModelSelectionPage';
@@ -24,7 +24,7 @@ function App() {
   };
 
   return (
-    <Router>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Layout><HomePage /></Layout>} />
@@ -39,7 +39,7 @@ function App() {
         <Route path="/consultation" element={<Layout><ConsultationPage /></Layout>} />
         <Route path="/designs/:id" element={<DesignSummaryPage />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 

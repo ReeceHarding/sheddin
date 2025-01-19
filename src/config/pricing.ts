@@ -28,6 +28,12 @@ export const PRICING = {
     roofAddon: {
       'none': 0,
       'back-eaves-6inches': 308
+    },
+    doorStyle: {
+      'door-5': 0,
+      'door-6': 500,
+      'door-7': 800,
+      'door-8': 1200
     }
   }
 } as const;
@@ -35,8 +41,9 @@ export const PRICING = {
 export const calculateTotalPrice = (selectedOptions: Record<string, string>): number => {
   const basePrice = PRICING.base;
   
-  return Object.entries(selectedOptions).reduce((total, [category, option]) => {
+  return Object.entries(selectedOptions).reduce<number>((total, [category, option]) => {
     const categoryPricing = PRICING.options[category as keyof typeof PRICING.options];
-    return total + (categoryPricing?.[option] || 0);
+    if (!categoryPricing) return total;
+    return total + (categoryPricing[option as keyof typeof categoryPricing] ?? 0);
   }, basePrice);
 };
