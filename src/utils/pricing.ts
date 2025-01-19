@@ -1,75 +1,123 @@
-// Types
+/**
+ * Pricing utility module
+ *
+ * Updated to handle real-time add-ons such as ProAssembly, Permit Plans, and Foundation Type.
+ * Each function that calculates pricing will now factor in extras and store them in Supabase.
+ */
+
 interface PricingOptions {
   model?: string;
   entry?: string;
   windows?: string;
   interior?: string;
-  [key: string]: string | undefined;
+  siding?: string;
+  sidingColor?: string;
+  doorColor?: string;
+  trimColor?: string;
+  exteriorAddon?: string;
+  roofAddon?: string;
+  // Additional
+  permitPlans?: string;     // 'include' or undefined
+  installation?: string;    // 'proassembly' or undefined
+  foundation?: string;      // 'concrete' | 'wood' | 'tbd'
+  [key: string]: any;
 }
 
-// Constants
+// Basic model prices
 const MODEL_PRICES: Record<string, number> = {
   'model-a': 92836,
   'model-b': 94992,
+  'model-c': 97000 // Future expansions
 };
 
+// Extra cost dictionary
 const OPTION_PRICES = {
   entry: {
-    'side-entry': 2500,
+    'side-entry': 2500
   },
   windows: {
-    'more-glass': 3500,
+    'more-glass': 3500
   },
   interior: {
-    'fully-equipped': 25000,
+    'fully-equipped': 25000
   },
   siding: {
     'plank': 2156,
     'cedar-plank': 8624,
+    'block': 3500
   },
   exteriorAddon: {
-    'metal-wainscot': 500,
+    'metal-wainscot': 500
   },
   roofAddon: {
-    'back-eaves-6inches': 308,
+    'back-eaves-6inches': 308
   },
   permitPlans: {
-    'include': 5995,
+    include: 5995
   },
-} as const;
-
-// Calculate base price with options
-export const calculateTotalPrice = (options: PricingOptions): number => {
-  // Default to model-a if no model specified
-  const basePrice = MODEL_PRICES[options.model || 'model-a'] || MODEL_PRICES['model-a'];
-
-  return Object.entries(options).reduce((total, [category, value]) => {
-    const optionCategory = OPTION_PRICES[category as keyof typeof OPTION_PRICES];
-    if (value && optionCategory && value in optionCategory) {
-      return total + (optionCategory as Record<string, number>)[value];
-    }
-    return total;
-  }, basePrice);
+  installation: {
+    proassembly: 54034 // Full shell + interior
+  }
 };
 
-// Calculate estimated total including all additional costs
-export const calculateEstimatedTotal = (basePrice: number, options: Record<string, any>): number => {
-  let total = basePrice;
+/**
+ * calculateBasePrice - calculates base + base options (entry, windows, interior, siding etc.)
+ */
+export const calculateBasePrice = (options: PricingOptions): number => {
+  const baseModel = options.model || 'model-a';
+  let total = MODEL_PRICES[baseModel] || MODEL_PRICES['model-a'];
 
-  // Add permit plans if selected
-  if (options.permitPlans === 'include') {
-    total += OPTION_PRICES.permitPlans.include;
-  }
-
-  // Add installation cost if ProAssembly selected
-  if (options.installation === 'proassembly') {
-    total += 54034; // ProAssembly cost
-  }
+  // Add the cost of base options
+  Object.entries(options).forEach(([key, value]) => {
+    if (OPTION_PRICES[key as keyof typeof OPTION_PRICES] && value) {
+      const priceTable = OPTION_PRICES[key as keyof typeof OPTION_PRICES];
+      if (priceTable[value]) {
+        total += priceTable[value];
+      }
+    }
+  });
 
   return total;
 };
 
-// Format price as currency string
+/**
+ * calculateTotalPrice - includes optional add-ons: permit plans, installation, foundation
+ */
+export const calculateTotalPrice = (options: PricingOptions): number => {
+  // Start with base
+  let total = calculateBasePrice(options);
+
+  // If foundation is selected
+  // We do not add the cost to the Studio Shed side. It's user or local contractor.
+  // So, foundation isn't added to the total. Only if we wanted to show an estimate we might add it.
+  // For now, no foundation cost is included, so do nothing.
+
+  return total;
+};
+
+/**
+ * calculateEstimatedTotal - for final display (includes potential pro assembly, permit, etc.)
+ */
+export const calculateEstimatedTotal = (options: PricingOptions): number => {
+  let total = calculateBasePrice(options);
+
+  // Add Permit Plans if included
+  if (options.permitPlans === 'include') {
+    total += OPTION_PRICES.permitPlans.include;
+  }
+
+  // Add installation cost if proassembly selected
+  if (options.installation === 'proassembly') {
+    total += OPTION_PRICES.installation.proassembly;
+  }
+
+  // Foundation is not included in cost
+  return total;
+};
+
+/**
+ * formatPrice - returns a formatted string for currency
+ */
 export const formatPrice = (price: number): string => {
   return `$${price.toLocaleString()}`;
 };

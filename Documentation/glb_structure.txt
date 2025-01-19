@@ -1,0 +1,115 @@
+Cottage768_SU_Concept.glb
+├── asset
+├── scenes
+├── nodes
+│   ├── Root
+│   │   ├── Exterior
+│   │   │   ├── Walls
+│   │   │   │   ├── Wall_4.5
+│   │   │   │   └── Wall_6
+│   │   │   ├── Roof
+│   │   │   │   ├── Roof_Type1
+│   │   │   │   ├── Roof_Type2
+│   │   │   │   └── Roof_Type3
+│   │   │   ├── Doors
+│   │   │   │   ├── Door#5
+│   │   │   │   ├── Door#6
+│   │   │   │   ├── Door#7
+│   │   │   │   └── Door#8
+│   │   │   └── Windows
+│   │   │       ├── Single_Casement_Window#1
+│   │   │       ├── Single_Casement_Window#2
+│   │   │       ├── Single_Casement_Window#3
+│   │   │       └── Single_Casement_Window#4
+│   │   ├── Interior
+│   │   │   ├── Flooring
+│   │   │   │   ├── Hardwood
+│   │   │   │   ├── Laminate
+│   │   │   │   └── Tile
+│   │   │   ├── Wall_Colors
+│   │   │   │   ├── Neutral_Tones
+│   │   │   │   ├── Bold_Colors
+│   │   │   │   └── Pastels
+│   │   │   ├── Ceilings
+│   │   │   │   ├── Flat_Ceiling
+│   │   │   │   ├── Tray_Ceiling
+│   │   │   │   └── Coffered_Ceiling
+│   │   │   └── Rooms
+│   │   │       ├── Living_Room
+│   │   │       ├── Kitchen
+│   │   │       ├── Bedroom
+│   │   │       └── Bathroom
+│   │   ├── Furnishings
+│   │   │   ├── Sofas
+│   │   │   │   ├── Sectional_Sofa
+│   │   │   │   ├── Chesterfield_Sofa
+│   │   │   │   └── Sleeper_Sofa
+│   │   │   ├── Beds
+│   │   │   │   ├── King_Size
+│   │   │   │   ├── Queen_Size
+│   │   │   │   └── Twin_Size
+│   │   │   ├── Dining_Furniture
+│   │   │   │   ├── Dining_Table
+│   │   │   │   │   ├── Extendable_Table
+│   │   │   │   │   ├── Round_Table
+│   │   │   │   │   └── Rectangular_Table
+│   │   │   │   └── Dining_Chairs
+│   │   │   │       ├── Modern_Stacking_Chair
+│   │   │   │       ├── Upholstered_Dining_Chair
+│   │   │   │       └── Wooden_Dining_Chair
+│   │   │   └── Accessories
+│   │   │       ├── Pillows
+│   │   │       ├── Rugs
+│   │   │       └── Lighting_Fixtures
+│   │   └── Appliances
+│   │       ├── Kitchen_Appliances
+│   │       │   ├── Refrigerator
+│   │       │   ├── Microwave
+│   │       │   └── Electric_Range
+│   │       └── Laundry_Appliances
+│   │           ├── Washer
+│   │           └── Dryer
+├── materials
+│   ├── Exterior_Materials
+│   │   ├── Brick
+│   │   ├── Vinyl_Siding
+│   │   └── Wood_Cladding
+│   ├── Roof_Materials
+│   │   ├── Shingles
+│   │   ├── Metal
+│   │   └── Tiles
+│   ├── Door_Materials
+│   │   ├── Wood
+│   │   ├── Glass
+│   │   └── Sliding
+│   ├── Window_Materials
+│   │   ├── Aluminum
+│   │   ├── Wood
+│   │   └── Vinyl
+│   ├── Interior_Materials
+│   │   ├── Hardwood
+│   │   ├── Laminate
+│   │   ├── Tile
+│   │   ├── Neutral_Tones
+│   │   ├── Bold_Colors
+│   │   ├── Pastels
+│   │   ├── Flat_Ceiling
+│   │   ├── Tray_Ceiling
+│   │   ├── Coffered_Ceiling
+│   │   └── Furniture_Materials
+│   │       ├── Sofa_Upholstery
+│   │       ├── Bed_Frame
+│   │       └── Dining_Table_Material
+│   ├── Appliance_Materials
+│   │   ├── Stainless_Steel
+│   │   ├── Black_Finish
+│   │   └── White_Finish
+│   └── Color_Palettes
+│       ├── Palette1
+│       ├── Palette2
+│       └── Palette3
+├── images
+├── textures
+├── meshes
+├── accessors
+└── bufferViews

@@ -25,7 +25,7 @@ export const SaveDesignForm: React.FC<SaveDesignFormProps> = ({ options }) => {
       ...prev,
       [e.target.name]: e.target.value
     }));
-    setErrorMessage(null); // Clear error when user types
+    setErrorMessage(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -44,7 +44,8 @@ export const SaveDesignForm: React.FC<SaveDesignFormProps> = ({ options }) => {
             last_name: formData.lastName,
             phone: formData.phoneNumber,
             zip_code: formData.zipCode
-          }
+          },
+          emailRedirectTo: window.location.origin // if we want them to confirm email
         }
       });
 
@@ -55,13 +56,19 @@ export const SaveDesignForm: React.FC<SaveDesignFormProps> = ({ options }) => {
 
       if (authData.user) {
         // Save the configuration
-        const { data: configData, error: configError } = await supabase
+        // store to user_configs table
+        const userId = authData.user.id;
+
+        // get current total price from user_configs table if needed, or pass 0
+        // but we can read from "options" after sign up
+        // upsert
+        const { data: configUpsert, error: configError } = await supabase
           .from('user_configs')
-          .insert({
-            user_id: authData.user.id,
+          .upsert({
+            user_id: userId,
             config_name: 'Default Configuration',
             options: options
-          })
+          }, { onConflict: 'user_id' })
           .select()
           .single();
 
@@ -70,8 +77,26 @@ export const SaveDesignForm: React.FC<SaveDesignFormProps> = ({ options }) => {
           throw new Error(configError.message);
         }
 
-        // Redirect to their design page using the config ID
-        window.location.href = `/designs/${configData.id}`;
+        // Call the edge function to send-saved-design
+        // The edge function name is `send-saved-design`
+        // We will pass the user_id, user email, and config details
+        await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-saved-design`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+          },
+          body: JSON.stringify({
+            userId: userId,
+            email: formData.email,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            config: configUpsert
+          })
+        });
+
+        // Redirect to their design page
+        window.location.href = `/designs/${authData.user.id}`;
       } else {
         throw new Error('No user data returned from signup');
       }
@@ -87,13 +112,13 @@ export const SaveDesignForm: React.FC<SaveDesignFormProps> = ({ options }) => {
     <div className="max-w-2xl mx-auto">
       <FormHeader />
       <FormDescription />
-      
+
       {errorMessage && (
         <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
           <p className="text-red-600 text-sm">{errorMessage}</p>
         </div>
       )}
-      
+
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid md:grid-cols-2 gap-6 mb-6">
           <FormInput

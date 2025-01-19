@@ -6,53 +6,16 @@ import { DoorsWindowsSection } from './sections/DoorsWindowsSection';
 import { InteriorSection } from './sections/InteriorSection';
 import { ExteriorSection } from './sections/ExteriorSection';
 import { SaveDesignForm } from './save-design/SaveDesignForm';
-import { calculateTotalPrice } from '../../config/pricing';
+import { calculateEstimatedTotal } from '../../utils/pricing';
 import { useAuth } from '../../hooks/useAuth';
+import { useConfigurator } from '../../context/ConfiguratorContext';
 
 type SectionId = 'floor-plan' | 'doors-windows' | 'interior' | 'exterior';
 
 export const ConfiguratorLayout = () => {
   const { user } = useAuth();
   const { modelId } = useParams();
-  const [selectedOptions, setSelectedOptions] = React.useState({
-    // Base options
-    entry: 'front-entry',
-    windows: 'more-glass',
-    interior: 'fully-equipped',
-    
-    // Exterior options
-    siding: 'lap',
-    sidingColor: 'iron-gray',
-    doorColor: 'factory-primed-white',
-    trimColor: 'aluminum',
-    exteriorAddon: 'none',
-    roofAddon: 'none',
-    
-    // Interior finishes
-    fixtures: 'matte-black',
-    countertops: 'white-shaker',
-    cabinets: 'white-shaker',
-    mainFlooring: 'ashlar-oak',
-    bathFlooring: 'ice-fog'
-  });
-
-  const [totalPrice, setTotalPrice] = React.useState(calculateTotalPrice(selectedOptions));
-
-  useEffect(() => {
-    const savedOptions = sessionStorage.getItem('savedDesignOptions');
-    if (savedOptions) {
-      setSelectedOptions(JSON.parse(savedOptions));
-      sessionStorage.removeItem('savedDesignOptions');
-    }
-  }, []);
-
-  const handleOptionChange = (category: string, value: string) => {
-    setSelectedOptions(prev => {
-      const newOptions = { ...prev, [category]: value };
-      setTotalPrice(calculateTotalPrice(newOptions));
-      return newOptions;
-    });
-  };
+  const { state, refreshTotal, updateOption } = useConfigurator();
 
   const sectionRefs = {
     'floor-plan': useRef<HTMLDivElement>(null),
@@ -61,60 +24,77 @@ export const ConfiguratorLayout = () => {
     'exterior': useRef<HTMLDivElement>(null)
   };
 
+  useEffect(() => {
+    refreshTotal();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const scrollToSection = (sectionId: SectionId) => {
-    sectionRefs[sectionId]?.current?.scrollIntoView({ 
+    sectionRefs[sectionId]?.current?.scrollIntoView({
       behavior: 'smooth',
       block: 'start'
     });
   };
 
+  // Add a function to handle changes for "permitPlans", "installation", or "foundation"
+  // This can be used by child components to update add-on choices in real-time
+  const handleAddOnChange = (category: string, value: string) => {
+    updateOption(category, value);
+  };
+
+  const estimatedTotal = calculateEstimatedTotal({
+    model: state.selectedModel,
+    ...state.options
+  });
+
   return (
     <div className="min-h-screen bg-white">
-      <ConfiguratorHeader 
-        totalPrice={totalPrice}
-        selectedPlan="model-a"
+      <ConfiguratorHeader
+        totalPrice={state.totalPrice}
+        selectedPlan={state.selectedModel}
         specs={{
           dimensions: '14x22',
           sqft: 308,
           features: ['Front Entry', 'More Glass'],
         }}
-        options={selectedOptions}
+        options={state.options}
         onTabClick={scrollToSection}
       />
-      
+
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div ref={sectionRefs['floor-plan']}>
-          <FloorPlanSection 
-            onSelect={() => scrollToSection('doors-windows')}
-          />
+          <FloorPlanSection onSelect={() => scrollToSection('doors-windows')} />
         </div>
-        
+
         <div ref={sectionRefs['doors-windows']} className="mt-24">
-          <DoorsWindowsSection 
-            selectedOptions={selectedOptions}
-            onOptionChange={handleOptionChange}
+          <DoorsWindowsSection
+            selectedOptions={state.options}
+            onOptionChange={updateOption}
           />
         </div>
 
         <div ref={sectionRefs['interior']} className="mt-24">
-          <InteriorSection 
-            selectedOptions={selectedOptions}
-            onOptionChange={handleOptionChange}
+          <InteriorSection
+            selectedOptions={state.options}
+            onOptionChange={updateOption}
           />
         </div>
 
         <div ref={sectionRefs['exterior']} className="mt-24">
-          <ExteriorSection 
-            selectedOptions={selectedOptions}
-            onOptionChange={handleOptionChange}
+          <ExteriorSection
+            selectedOptions={state.options}
+            onOptionChange={updateOption}
           />
         </div>
 
         <div className="mt-24 border-t border-gray-200 pt-16">
           {!user ? (
-            <SaveDesignForm options={selectedOptions} />
+            <SaveDesignForm options={state.options} />
           ) : (
-            <div className="max-w-2xl mx-auto">
+            <div className="max-w-2xl mx-auto space-y-4">
+              <div className="text-center text-xl">
+                Estimated Total: ${estimatedTotal.toLocaleString()}
+              </div>
               <div className="flex justify-center">
                 <a
                   href={`/designs/${user.id}`}
